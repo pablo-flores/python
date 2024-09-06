@@ -3,13 +3,10 @@ from flask_pymongo import PyMongo
 from datetime import datetime
 import os
 
-#app = Flask(__name__, template_folder=r'C:\OneDriveTeco\OneDrive - Telecom Argentina SA\CV-Inventario y Monitoreo de Red\python\top10')
-#app = Flask(__name__)
 app = Flask(__name__, template_folder="templates")
 
-
 # Configuración de la conexión con MongoDB
-app.config["MONGO_URI"] = "mongodb://omusr:omusr2022@ulmongorouapp1.hor.corp.cloudteco.com.ar:27017/OutageManager"
+app.config["MONGO_URI"] = "mongodb://omusr:omusr@plmongorouapp1.hor.corp.cloudteco.com.ar:27017/OutageManager"
 mongo = PyMongo(app)
 
 def format_datetime(dt):
