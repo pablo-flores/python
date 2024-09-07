@@ -23,6 +23,24 @@ spec:
             requests:
               memory: "128Mi"
               cpu: "128m"
+          env:
+            - name: TZ
+              value: America/Argentina/Buenos_Aires
+            - name: MONGODB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: om-commons-config
+                  key: MONGODB_URI
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: outage-manager-mongo-db-credentials
+                  key: spring_data_mongodb_password
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: outage-manager-mongo-db-credentials
+                  key: spring_data_mongodb_username              
 ---
 kind: Service
 apiVersion: v1
