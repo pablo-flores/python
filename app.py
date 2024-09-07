@@ -14,11 +14,18 @@ password = os.getenv('MONGO_PASS')
 hostmongodb = os.getenv('MONGODB_URI')
 
 # Reemplazar los marcadores de posición en la cadena
-hostmongodb = hostmongodb.replace('${MONGO_USER}', username)
-hostmongodb = hostmongodb.replace('${MONGO_PASS}', password)
+#hostmongodb = hostmongodb.replace('${MONGO_USER}', username)
+#hostmongodb = hostmongodb.replace('${MONGO_PASS}', password)
+
+# Verificar que las variables no sean None
+if username and password and hostmongodb:
+    hostmongodb = hostmongodb.replace('${MONGO_USER}', username).replace('${MONGO_PASS}', password)
+else:
+    #raise ValueError("Las variables de entorno MONGODB_URI o MONGO_USER o MONGO_PASS no están definidas.")
+    print("Las variables de entorno MONGODB_URI o MONGO_USER o MONGO_PASS no están definidas.")
 
 # Configuración de la conexión con MongoDB
-app.config["MONGO_URI"] = hostmongodb # f'mongodb://{username}:{password}@{hostmongodb}:{port}/{db_name}'
+app.config["MONGO_URI"] = hostmongodb 
 mongo = PyMongo(app)
 
 
