@@ -72,7 +72,31 @@
         {% endfor %}
     </table>
     <div class="footer">
-        Última actualización: {{ fecha_actualizacion }}
+        Última actualización: <span id="local-time"></span>
     </div>
+
+    <script>
+        // Function to get local time and format it
+        function updateLocalTime() {
+            const now = new Date();
+            const options = {
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false // Use 24-hour format
+            };
+            const formattedTime = now.toLocaleString('es-AR', options);
+            document.getElementById('local-time').textContent = formattedTime;
+        }
+
+        // Update the local time immediately
+        updateLocalTime();
+
+        // Optionally, update the time every second (optional if you want live time)
+        //setInterval(updateLocalTime, 1000);
+    </script>
 </body>
 </html>
