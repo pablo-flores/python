@@ -1,18 +1,36 @@
 from flask import Flask, render_template
 from flask_pymongo import PyMongo
 from datetime import datetime
+from pytz import timezone, utc
 import os
 
 app = Flask(__name__, template_folder="templates")
 
+db_name = 'OutageManager'
+port = 27017
+collection = 'alarm'
+username = os.getenv('MONGO_USER')
+password = os.getenv('MONGO_PASS')
+hostmongodb = os.getenv('MONGODB_URI')
+
+# Reemplazar los marcadores de posición en la cadena
+hostmongodb = hostmongodb.replace('${MONGO_USER}', username)
+hostmongodb = hostmongodb.replace('${MONGO_PASS}', password)
+
 # Configuración de la conexión con MongoDB
-app.config["MONGO_URI"] = "mongodb://omusr:omusr2022@ulmongorouapp1.hor.corp.cloudteco.com.ar:27017/OutageManager"
+app.config["MONGO_URI"] = hostmongodb # f'mongodb://{username}:{password}@{hostmongodb}:{port}/{db_name}'
 mongo = PyMongo(app)
+
 
 def format_datetime(dt):
     if isinstance(dt, datetime):
         return dt.strftime('%d-%m-%Y %H:%M:%S')
     return None
+
+# Definir la zona horaria Local (Buenos Aires)
+buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
+
+
 
 @app.route('/')
 def index():
@@ -35,8 +53,8 @@ def index():
     
     alarmas = []
     for alarma in cursor:
-        alarma['inicioOUM'] = format_datetime(alarma.get('inicioOUM'))
-        alarma['alarmRaisedTime'] = format_datetime(alarma.get('alarmRaisedTime'))
+        alarma['inicioOUM'] = alarma.get('inicioOUM').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%d-%m-%Y %H:%M:%S')
+        alarma['alarmRaisedTime'] = alarma.get('alarmRaisedTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%d-%m-%Y %H:%M:%S')
         alarmas.append(alarma)
     
     # Fecha de última actualización
