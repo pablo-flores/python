@@ -1,11 +1,9 @@
+#FROM python:3.9-slim
 FROM registry.access.redhat.com/ubi9/python-39:1-117.1684741281
 
-# By default, listen on port 8081
-EXPOSE 8081/tcp
-ENV FLASK_PORT=8081
-
-# Set the working directory in the container
+#WORKDIR /app
 WORKDIR /projects
+
 
 # Copy the content of the local src directory to the working directory
 COPY . .
@@ -18,5 +16,22 @@ RUN \
     then pip install -r *.txt; \
   fi
 
-# Specify the command to run on container start
-CMD [ "python", "./app.py" ]
+#COPY requirements.txt ./
+#RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE 8081/tcp
+
+#CMD ["gunicorn", "--bind", "0.0.0.0:8081", "app:app"]
+# Variables de entorno recomendadas para OCP
+ENV PYTHONUNBUFFERED=1 \
+    FLASK_ENV=production \
+    PORT=8081 \
+    FLASK_PORT=8081
+
+
+# Comando para ejecutar waitress y servir la aplicación Flask
+#CMD ["waitress-serve", "--port=8081", "--call", "app:create_app"]
+CMD ["waitress-serve", "--listen=0.0.0.0:8081", "app:app"]
+
