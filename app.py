@@ -1,4 +1,5 @@
 from flask import Flask, render_template, Response, jsonify
+from datetime import datetime, timedelta
 from flask_pymongo import PyMongo
 from datetime import datetime
 from pytz import timezone, utc
@@ -14,6 +15,9 @@ username = os.getenv('MONGO_USER')
 password = os.getenv('MONGO_PASS')
 hostmongodb = os.getenv('MONGODB_URI')
 
+# Obtén el valor de DAYS_CLEARED_AGO, si no existe, usa 4 como valor por defecto
+days_configMap = int(os.getenv('DAYS_CLEARED_AGO', 4))
+
 # Verificar las variables de entorno
 if username and password and hostmongodb:
     hostmongodb = hostmongodb.replace('${MONGO_USER}', username).replace('${MONGO_PASS}', password)
@@ -26,17 +30,33 @@ mongo = PyMongo(app)
 
 # Definir la zona horaria Local (Buenos Aires)
 buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
+days_ago = datetime.now() - timedelta(days=days_configMap)#default 4
 
 # Ruta principal que carga la página
 @app.route('/')
 def index():
-    return render_template('viewTop10.html')
+    return render_template('viewTop10.html', days_configMap=days_configMap)
 
 # Nueva ruta para obtener las alarmas en formato JSON
 @app.route('/get_alarmas', methods=['GET'])
 def get_alarmas():
+
+# Calcula la fecha de hace 15 días desde hoy
+    #days_ago = datetime.now() - timedelta(days=days_configMap)#default 4
+
     cursor = mongo.db.alarm.find(
-        {"alarmState": {"$in": ['RAISED', 'UPDATED', 'RETRY']}},
+        {
+            "$or": [
+                { 
+                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] },
+                    "alarmRaisedTime": { "$gte": days_ago } 
+                },
+                {
+                    "alarmState": "CLEARED",
+                    "alarmClearedTime": { "$gte": days_ago }
+                }
+            ]
+        },
         {
             "_id": 0,
             "alarmId": 1,
@@ -53,6 +73,7 @@ def get_alarmas():
             "alarmClearedTime": 1
         }
     ).sort("_id", -1)
+
 
     alarmas = []
     for alarma in cursor:
@@ -82,7 +103,18 @@ def get_alarmas():
 @app.route('/export/<format>')
 def export_data(format):
     cursor = mongo.db.alarm.find(
-        {"alarmState": {"$in": ['RAISED', 'UPDATED', 'RETRY', 'CLEARED']}},
+        {
+            "$or": [
+                { 
+                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] },
+                    "alarmRaisedTime": { "$gte": days_ago } 
+                },
+                {
+                    "alarmState": "CLEARED",
+                    "alarmClearedTime": { "$gte": days_ago }
+                }
+            ]
+        },
         {   "_id": 0,
             "alarmId": 1, "alarmState": 1, "alarmType": 1, 
             "inicioOUM": "$omArrivalTimestamp", "alarmRaisedTime": 1, "alarmClearedTime": 1,              

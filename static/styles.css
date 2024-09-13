@@ -146,3 +146,65 @@ h1 {
 .small-title {
     font-size: 0.7vw; /* Tamaño más pequeño solo para Alarm ID */
 }
+
+.refresh-container {
+    text-align: right; /* Alinea el botón a la derecha */
+    margin-bottom: 20px;
+}
+
+
+.btn-modern {
+    display: inline-block;
+    background-color: #5290d3; /* Color de fondo azul moderno */
+    color: white; /* Texto en blanco */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    font-size: 16px; /* Tamaño de fuente moderno */
+    font-weight: 300; /* Un poco más grueso para que se vea bien */
+    padding: 4px 20px; /* Espaciado interior para un botón más slim */
+    border-radius: 25px; /* Bordes redondeados para un estilo moderno */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Animaciones suaves */
+}
+
+.btn-modern:hover {
+    background-color: #0056b3; /* Color de fondo más oscuro al pasar el mouse */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más fuerte al pasar el mouse */
+}
+
+.btn-modern:active {
+    background-color: #004085; /* Color más oscuro cuando se hace clic */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reducida cuando se hace clic */
+}
+
+#loading-message {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Estilo moderno para el campo de búsqueda de DataTables */
+.dataTables_filter label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.dataTables_filter input {
+    border: 2px solid #007bff; /* Borde moderno */
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 10px 15px; /* Espaciado interior */
+    font-size: 16px; /* Tamaño de la fuente */
+    outline: none; /* Elimina el borde de enfoque predeterminado */
+    transition: border-color 0.3s ease; /* Suaviza la transición del borde */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para darle profundidad */
+}
+
+.dataTables_filter input:focus {
+    border-color: #0056b3; /* Cambia el color del borde al hacer foco */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al hacer foco */
+}
+
+.dataTables_filter {
+    text-align: right; /* Alinea el campo de búsqueda a la derecha */
+    margin-bottom: 20px; /* Espacio debajo */
+}
