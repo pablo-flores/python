@@ -7,6 +7,11 @@ h1 {
 }
 
 h2 {
+    font-size: 0.8em;
+    color: #5290d3;
+}
+
+h3 {
     font-size: 1.1em;
     color: #5290d3;
 }
@@ -84,10 +89,10 @@ h1 {
 .service-impact-analysis {
     background-color: #5290d3;
     color: rgb(255, 255, 255);
-    padding: 5px 0;
+    padding: 4px 0;
     width: 100%;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: bold;
     text-transform: none;
     letter-spacing: 2px;
@@ -201,10 +206,10 @@ h1 {
 
 .dataTables_filter input:focus {
     border-color: #0056b3; /* Cambia el color del borde al hacer foco */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al hacer foco */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4); /* Aumenta la sombra al hacer foco */
 }
 
 .dataTables_filter {
     text-align: right; /* Alinea el campo de búsqueda a la derecha */
-    margin-bottom: 20px; /* Espacio debajo */
+    margin-bottom: 2px; /* Espacio debajo */
 }
