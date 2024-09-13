@@ -36,7 +36,7 @@ def index():
 @app.route('/get_alarmas', methods=['GET'])
 def get_alarmas():
     cursor = mongo.db.alarm.find(
-        {"alarmState": {"$in": ['RAISED', 'UPDATED', 'RETRY', 'CLEARED']}},
+        {"alarmState": {"$in": ['RAISED', 'UPDATED', 'RETRY']}},
         {
             "_id": 0,
             "alarmId": 1,
