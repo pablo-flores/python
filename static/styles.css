@@ -1,0 +1,148 @@
+
+
+/* Estilos para el título y subtítulo */
+h1 {
+    color: #5290d3; /* Color del texto del título */
+    top: 60px;
+}
+
+h2 {
+    font-size: 1.1em;
+    color: #5290d3;
+}
+
+h4 {
+    text-align: left;
+    margin-top: 20px;   
+    background-color: #74a8df;
+    color: white;
+    width: fit-content;
+}
+
+/* Estilos para la tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto; /* Las columnas se ajustan según el contenido */
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    /*font-size: 14px; /* Ajusta el tamaño de la letra aquí */
+    font-size: 0.8vw; /* Tamaño de letra relativo al ancho de la ventana */
+    white-space: nowrap; /* Evita que el contenido se rompa en múltiples líneas */
+}
+/* Ajustar el ancho del contenido, pero permitir la ruptura de texto si es muy largo */
+td {
+    word-wrap: break-word; /* Permite que el texto largo se ajuste al ancho de la columna */
+}
+th {
+    background-color: #74a8df;
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.footer {
+    text-align: right;
+    font-size: 0.8em;
+    margin-top: 20px;
+}
+
+
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+
+/* Estilos para formularios */
+form {
+    width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*
+
+h1 {
+    font-size: 2.5em;
+    color: #0056b3;
+    font-weight: bold;
+    text-transform: none;
+    margin-bottom: 30px;
+}
+*/
+
+/* Barra de Service Impact Analysis */
+.service-impact-analysis {
+    background-color: #5290d3;
+    color: rgb(255, 255, 255);
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: none;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    align-items: center;
+    justify-content: left;
+    height: 25px;  
+    display: flex;
+}
+
+/*
+.service-impact-analysis {
+    background-color: #0056b3;
+    color: rgb(255, 255, 255);
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: none;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    height: 40px;  
+    display: flex;
+}
+*/
+/* Estilo de la imagen del logo en la barra */
+.service-impact-analysis .logo {
+    height: 80%; /* Ajusta el tamaño de la imagen al alto de la barra */
+    margin-right: 20px;
+    max-height: 30px; /* Puedes ajustar este valor según el diseño */
+}
+
+/* Loading spinner */
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    flex-direction: column;
+}
+
+/* Estilo específico para el encabezado Alarm ID */
+.small-title {
+    font-size: 0.7vw; /* Tamaño más pequeño solo para Alarm ID */
+}

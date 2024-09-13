@@ -1,103 +1,204 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alarmas</title>
-    <style>
-        /* Estilos para el título */
-        h1 {
-            color: #00B5E9; /* Color del texto del título */
-        }
-
-        /* Estilos para la tabla */
-        table {
-            border-collapse: collapse; /* Colapsa los bordes de las celdas */
-            width: 100%; /* Ancho completo */
-        }
-
-        th, td {
-            border: 1px solid #000000; /* Borde negro para las celdas */
-            padding: 8px; /* Espaciado interno */
-            text-align: left; /* Alineación a la izquierda */
-            font-family: Arial, sans-serif; /* Fuente Arial para celdas */
-        }
-
-        th {
-            background-color: #69C4DD; /* Fondo azul claro para los encabezados */
-            color: #000000; /* Color de texto negro para los encabezados */
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2; /* Color de fondo gris claro para las filas pares */
-        }
-
-        .footer {
-            text-align: right; /* Alineación a la derecha */
-            font-size: 0.8em; /* Tamaño de fuente pequeño */
-            margin-top: 20px; /* Espaciado arriba del pie de página */
-            font-family: Arial, sans-serif; /* Fuente Arial para celdas */
-        }
-    </style>
+    <title>Alarmas Activas en el Outage Manager</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
+
 <body>
-    <h1>Top 10 de Alarmas OUM</h1>
-    <table>
-        <tr>
-            <th>Alarm ID</th>
-            <th>Alarm State</th>
-            <th>Alarm Type</th>
-            <th>Network Element ID</th>
-            <th>Inicio OUM</th>
-            <th>Clients</th>
-            <th>Type Network Element</th>
-            <th>Alarm Raised Time</th>
-            <th>Time Resolution</th>
-        </tr>
-        {% for alarma in alarmas %}
-        <tr>
-            <td>{{ alarma.alarmId }}</td>
-            <td>{{ alarma.alarmState }}</td>
-            <td>{{ alarma.alarmType }}</td>
-            <td>{{ alarma.networkElementId }}</td>
-            <td>{{ alarma.inicioOUM }}</td>
-            <td>{{ alarma.clients }}</td>
-            <td>{{ alarma.TypeNetworkElement }}</td>
-            <td>{{ alarma.alarmRaisedTime }}</td>
-            <td>{{ alarma.timeResolution }}</td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="9">No hay alarmas disponibles</td>
-        </tr>
-        {% endfor %}
+
+    <div id="loading">
+        <img src="https://i.gifer.com/ZZ5H.gif" alt="Cargando..." style="width:60px; height:60px;">
+        <p>Cargando datos, por favor espere...</p>
+    </div>
+    
+
+    <!-- Barra "Service Impact Analysis" con imagen -->
+    <div class="service-impact-analysis">
+        <img src="{{ url_for('static', filename='telecom.gif') }}" alt="Telecom Logo" class="logo">
+        Service Impact Analysis
+    </div>
+    
+    <!-- <h1>Alarmas Activas en el Outage Manager</h1>-->
+    <h2>Alarmas Activas en el Outage Manager</h2>
+    
+   
+    <table id="alarmTable" style="display:none;">
+        <thead>
+            <tr>
+                <th class="small-title">Alarm ID</th>
+                <th class="small-title">Alarm State</th>
+                <th class="small-title">Inicio OUM</th>                
+                <th class="small-title">Alarm Raised Time</th>
+                <th class="small-title">Alarm Cleared Time</th>                
+                <th class="small-title">Alarm Type</th>
+                <th class="small-title">Type Network Element</th>                
+                <th class="small-title">Network Element ID</th>
+                <th class="small-title">Clients</th>
+                <th class="small-title">Time Resolution</th>
+            </tr>       
+        </thead>
+        <tbody>
+            {% for alarma in alarmas %}
+            <tr title="Origen: {{ alarma.sourceSystemId }}    Relation: {{ alarma.alarmId }} --> {{ alarma.origenId }}">
+                <td>{{ alarma.alarmId }}</td>
+                <td>{{ alarma.alarmState }}</td>
+                <td>{{ alarma.inicioOUM }}</td>                
+                <td>{{ alarma.alarmRaisedTime }}</td>   
+                <td>{{ alarma.alarmClearedTime }}</td>                             
+                <td>{{ alarma.alarmType }}</td>
+                <td>{{ alarma.TypeNetworkElement }}</td>                
+                <td>{{ alarma.networkElementId }}</td>
+                <td>{{ alarma.clients }}</td>
+                <td>{{ alarma.timeResolution }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9">No hay alarmas disponibles</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
     <div class="footer">
         Foto del: <span id="local-time"></span>
     </div>
 
+    <div class="button">
+        <a href="/export/csv" class="btn"><h4>Exportar CSV</h4></a>
+        <a href="/export/excel" class="btn"><h4>Exportar Excel</h4></a> 
+    </div>
+
+
+    <!-- Include necessary JS libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
-        // Function to get local time and format it
+        $(document).ready(function() {
+            $('#loading').show();
+            $('#alarmTable').hide();
+    
+            // Llamada AJAX para obtener los datos
+            $.ajax({
+                url: '/get_alarmas',
+                method: 'GET',
+                success: function(response) {
+                    let tableBody = '';
+                    response.alarmas.forEach(function(alarma) {
+                        tableBody += `
+                        <tr>
+                            <td>${alarma.alarmId}</td>
+                            <td>${alarma.alarmState}</td>
+                            <td>${alarma.inicioOUM}</td>
+                            <td>${alarma.alarmRaisedTime}</td>
+                            <td>${alarma.alarmClearedTime}</td>
+                            <td>${alarma.alarmType}</td>
+                            <td>${alarma.TypeNetworkElement}</td>
+                            <td>${alarma.networkElementId}</td>
+                            <td>${alarma.clients}</td>
+                            <td>${alarma.timeResolution}</td>
+                        </tr>`;
+                    });
+                    $('#alarmTable tbody').html(tableBody);
+    
+                    // Inicializar DataTable
+                    $('#alarmTable').DataTable({
+                        "paging": true,
+                        "searching": true,
+                        "ordering": true,
+                        "order": [],  // No aplica un ordenamiento inicial, toma los datos tal como llegan
+                        "pageLength": 15,  // Cambia la cantidad de registros mostrados a 15
+                        "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
+                        "columnDefs": [
+                        { 
+                            "targets": 8, // El índice de la columna 'Clients' (empieza desde 0)
+                            "type": "num" // Define que esta columna debe tratarse como numérica
+                        },
+                        { 
+                            "targets": 9, // Índice de la columna 'Time Resolution'
+                            "type": "num" // Definir la columna como numérica
+                        },
+                        { 
+                            "targets": 0, // Índice de la columna 'alarm Id'
+                            "type": "num" // Definir la columna como numérica
+                        }
+                        ],
+                        "language": {
+                            "lengthMenu": "Mostrar _MENU_ entradas",
+                            "zeroRecords": "No se encontraron resultados",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                            "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                            "infoFiltered": "(filtrado de _MAX_ entradas totales)",
+                            "search": "Buscar:",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Último",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "emptyTable": "No hay datos disponibles en la tabla"
+                        }
+                    });
+    
+                    $('#loading').hide();
+                    $('#alarmTable').show();
+                    
+                },
+                error: function() {
+                    alert('Error al cargar los datos');
+                }
+            });
+        });
+    
+    
+
+     
+        // Function to get local time
         function updateLocalTime() {
             const now = new Date();
             const options = {
-                day: '2-digit', 
-                month: '2-digit', 
-                year: 'numeric', 
-                hour: '2-digit', 
-                minute: '2-digit', 
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
                 second: '2-digit',
-                hour12: false // Use 24-hour format
+                hour12: false
             };
             const formattedTime = now.toLocaleString('es-AR', options);
             document.getElementById('local-time').textContent = formattedTime;
         }
 
-        // Update the local time immediately
         updateLocalTime();
 
-        // Optionally, update the time every second (optional if you want live time)
-        //setInterval(updateLocalTime, 1000);
     </script>
+
+    <h2>Explicación de columnas</h2>
+    <p><strong>Alarm Id:</strong> Identificador único de la alarma. <br>
+       <strong>Alarm State:</strong> Estado actual de la alarma. <br>
+       <strong>Inicio OUM:</strong> Fecha y hora que llego al Outage Manager. <br>
+       <strong>Alarm Raised Time:</strong> Fecha y hora que se detecto la alarma. <br>
+       <strong>Alarm Cleared Time:</strong> Fecha y hora que se desafecto la alarma. <br>       
+       <strong>Alarm Type:</strong> Tipo de alarma. <br>
+       <strong>Type Network Element:</strong> Tipo de elemento de red asociado. <br>
+       <strong>Network Element ID:</strong> Identificador del elemento de red. <br>
+       <strong>Clients:</strong> Cantidad de clientes afectados. <br>
+       <strong>Time Resolution:</strong> Tiempo de resolución.</p>
+       <!--
+       <strong>Origen:</strong> Sistema origen de la alarma.</p>
+       <strong>origenId:</strong> Identificador de la alarma del origen</p>
+        -->
 </body>
 </html>
+
+
+
