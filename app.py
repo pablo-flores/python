@@ -1,10 +1,14 @@
+import logging
 from flask import Flask, render_template, Response, jsonify
 from datetime import datetime, timedelta
 from flask_pymongo import PyMongo
-from datetime import datetime
 from pytz import timezone, utc
 import pandas as pd
 import os
+
+# Configuración del logger
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__, template_folder="templates")
 
@@ -21,8 +25,9 @@ days_configMap = int(os.getenv('DAYS_CLEARED_AGO', 4))
 # Verificar las variables de entorno
 if username and password and hostmongodb:
     hostmongodb = hostmongodb.replace('${MONGO_USER}', username).replace('${MONGO_PASS}', password)
+    logger.info("Variables de entorno de MongoDB definidas correctamente.")
 else:
-    print("Las variables de entorno MONGODB_URI o MONGO_USER o MONGO_PASS no están definidas.")
+    logger.warning("Las variables de entorno MONGODB_URI, MONGO_USER o MONGO_PASS no están definidas.")
 
 # Configuración de la conexión con MongoDB
 app.config["MONGO_URI"] = hostmongodb
@@ -30,19 +35,19 @@ mongo = PyMongo(app)
 
 # Definir la zona horaria Local (Buenos Aires)
 buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
-days_ago = datetime.now() - timedelta(days=days_configMap)#default 4
+#days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
 
 # Ruta principal que carga la página
 @app.route('/')
 def index():
-    return render_template('viewTop10.html', days_configMap=days_configMap)
+    logger.info("Cargando la página viewAlarmsOUM.")
+    return render_template('viewAlarmsOUM.html', days_configMap=days_configMap)
 
 # Nueva ruta para obtener las alarmas en formato JSON
 @app.route('/get_alarmas', methods=['GET'])
 def get_alarmas():
-
-# Calcula la fecha de hace 15 días desde hoy
-    #days_ago = datetime.now() - timedelta(days=days_configMap)#default 4
+    days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
+    logger.info(f"Consultando alarmas desde {days_ago}.")
 
     cursor = mongo.db.alarm.find(
         {
@@ -74,7 +79,6 @@ def get_alarmas():
         }
     ).sort("_id", -1)
 
-
     alarmas = []
     for alarma in cursor:
         if alarma.get('inicioOUM'):
@@ -97,11 +101,15 @@ def get_alarmas():
 
         alarmas.append(alarma)
 
+    logger.info(f"Se encontraron {len(alarmas)} alarmas.")
     return jsonify({"alarmas": alarmas})
 
 # Ruta para exportar los datos
 @app.route('/export/<format>')
 def export_data(format):
+    days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
+    logger.info(f"Exportando alarmas en formato {format}.")
+
     cursor = mongo.db.alarm.find(
         {
             "$or": [
@@ -130,11 +138,12 @@ def export_data(format):
     df = df[['alarmId', 'alarmState', 'alarmType', 'inicioOUM', 'alarmRaisedTime', 'alarmClearedTime', 
              'TypeNetworkElement', 'networkElementId', 'clients', 'timeResolution', 'sourceSystemId', 'origenId']]
 
-    fecha_actual = datetime.now().strftime('%Y%m%d%H%M%S')
+    fecha_actual = datetime.now(buenos_aires_tz).strftime('%Y%m%d%H%M%S')
 
     if format == 'csv':
         csv_data = df.to_csv(index=False)
-        return Response(csv_data, mimetype="text/csv", headers={"Content-disposition": "attachment; filename=SIA_alarmas_"+fecha_actual+".csv"})
+        logger.info("Exportación a CSV completa.")
+        return Response(csv_data, mimetype="text/csv", headers={"Content-disposition": f"attachment; filename=SIA_alarmas_{fecha_actual}.csv"})
     elif format == 'excel':
         output = pd.ExcelWriter('/tmp/alarmas.xlsx', engine='xlsxwriter')
         df.to_excel(output, index=False)
@@ -142,18 +151,14 @@ def export_data(format):
 
         with open('/tmp/alarmas.xlsx', 'rb') as f:
             excel_data = f.read()
+        logger.info("Exportación a Excel completa.")
         return Response(excel_data, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        headers={"Content-disposition": "attachment; filename=SIA_alarmas_"+fecha_actual+".xlsx"})
+                        headers={"Content-disposition": f"attachment; filename=SIA_alarmas_{fecha_actual}.xlsx"})
     else:
+        logger.warning("Formato de exportación no soportado.")
         return "Unsupported format. Please use 'csv' or 'excel'."
-
-#if __name__ == '__main__':
-#    port = os.environ.get('FLASK_PORT') or 8080
-#    port = int(port)
-#    app.run(port=port, host='0.0.0.0')
 
 if __name__ == '__main__':
     port = os.environ.get('FLASK_PORT') or 8080
+    logger.info(f"Iniciando la aplicación en el puerto {port}.")
     app.run(port=int(port), host='0.0.0.0')
-# se levanta con
-# waitress-serve --listen=0.0.0.0:8081 app:app    
