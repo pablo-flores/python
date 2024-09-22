@@ -61,6 +61,7 @@ tr:nth-child(even) {
 /* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
+    margin: 0;  padding: 0;  margin-bottom: 15px;  margin-top: 8px;
 }
 
 
@@ -202,4 +203,26 @@ th.centered-column {
     white-space: nowrap;
     width: 1%;
     text-align: center;
+}
+
+#expandableDiv {
+    width: auto;
+    height: 0;
+    overflow: hidden;
+
+    transition: border-color 0.9s ease; /* Suaviza la transición del borde */
+    /*background-color: lightblue;*/
+    border-color: #123254; /* Cambia el color del borde al hacer foco */
+    padding: 0 10px;
+    
+    box-sizing: border-box;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para darle profundidad */
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + #expandableDiv {
+    height: auto; /* Altura final cuando el div esté expandido */
 }

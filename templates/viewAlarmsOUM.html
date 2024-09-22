@@ -28,46 +28,54 @@
             <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Refresh - Foto: <span id="local-time"></span></a>        
         </div>
     </div>
+
     
-    <!-- <h1>Alarmas Activas en el Outage Manager</h1>-->
-    <h2>Alarmas en el Outage Manager</h2>
-  
-    <table id="alarmTable" style="display:none;">
-        <thead>
-            <tr>
-                <th class="small-title">Alarm ID</th>
-                <th class="small-title">Alarm State</th>
-                <th class="small-title" style="text-align: center; width: 1%; ">Alarm Raised Time</th> <!-- Centramos esta columna -->                      
-                <th class="small-title" style="text-align: center; width: 1%; ">Alarm Cleared Time</th> <!-- Centramos esta columna -->      
-                <th class="small-title">Alarm Type</th>
-                <th class="small-title" style="text-align: center; width: 1%; ">Inicio Outage</th> <!-- Centramos esta columna -->                      
-                <th class="small-title">Type Network Element</th>                
-                <th class="small-title">Network Element ID</th>
-                <th class="small-title">Clients</th>
-                <th class="small-title">Time Resolution</th>
-            </tr>       
-        </thead>
-        <tbody>
-            {% for alarma in alarmas %}
-            <tr title="Origen: {{ alarma.sourceSystemId }}    Relation: {{ alarma.alarmId }} --> {{ alarma.origenId }}">
-                <td>{{ alarma.alarmId }}</td>
-                <td>{{ alarma.alarmState }}</td>
-                <td style="text-align: center; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
-                <td style="text-align: center; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
-                <td>{{ alarma.alarmType }}</td>
-                <td style="text-align: center; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->                                                  
-                <td>{{ alarma.TypeNetworkElement }}</td>                
-                <td>{{ alarma.networkElementId }}</td>
-                <td>{{ alarma.clients }}</td>
-                <td>{{ alarma.timeResolution }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="9">No hay alarmas disponibles</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div>
+        <!-- <h1>Alarmas Activas en el Outage Manager</h1>-->
+        <h2>Alarmas en el Outage Manager</h2>
+    </div>    
+
+    <div>
+        <!-- <h1>Alarmas Activas en el Outage Manager</h1>
+        <h2>Alarmas en el Outage Manager</h2>-->
+    
+        <table id="alarmTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th class="small-title">Alarm Id</th>
+                    <th class="small-title">Alarm State</th>
+                    <th class="small-title" style="text-align: center; width: 1%; ">Alarm Raised Time</th> <!-- Centramos esta columna -->                      
+                    <th class="small-title" style="text-align: center; width: 1%; ">Alarm Cleared Time</th> <!-- Centramos esta columna -->      
+                    <th class="small-title">Alarm Type</th>
+                    <th class="small-title" style="text-align: center; width: 1%; ">Inicio Outage</th> <!-- Centramos esta columna -->                      
+                    <th class="small-title">Type Network Element</th>                
+                    <th class="small-title">Network Element ID</th>
+                    <th class="small-title">Clients</th>
+                    <th class="small-title">Time Resolution</th>
+                </tr>       
+            </thead>
+            <tbody>
+                {% for alarma in alarmas %}
+                <tr title="Origen: {{ alarma.sourceSystemId }}    Relation: {{ alarma.alarmId }} --> {{ alarma.origenId }}">
+                    <td>{{ alarma.alarmId }}</td>
+                    <td>{{ alarma.alarmState }}</td>
+                    <td style="text-align: center; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
+                    <td style="text-align: center; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
+                    <td>{{ alarma.alarmType }}</td>
+                    <td style="text-align: center; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->                                                  
+                    <td>{{ alarma.TypeNetworkElement }}</td>                
+                    <td>{{ alarma.networkElementId }}</td>
+                    <td>{{ alarma.clients }}</td>
+                    <td>{{ alarma.timeResolution }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="9">No hay alarmas disponibles</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <!-- Mensaje de "Espere..." oculto al principio -->
     <div id="loading-message" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); color: white; padding: 20px; border-radius: 10px; z-index: 9999;">
@@ -251,21 +259,26 @@
 
     </script>
 
-    <h3>Explicación de columnas</h3>
-    <p><strong>Alarm Id:</strong>  Id del Outage (o Alarma), interno del Outage Manager (OUM).<br>
-       <strong>Alarm State:</strong> Estado actual de la alarma (en outage y cadena).<br>
-       <strong>Alarm Raised Time:</strong> Fecha y hora que se detecto 1er evento de la alarma.<br>
-       <strong>Alarm Cleared Time:</strong> Fecha y hora que se desafecto la alarma de los últimos {{ days_configMap }} días.<br>       
-       <strong>Alarm Type:</strong> Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAM...).<br>
-       <strong>Inicio Outage:</strong> Fecha y hora que llego al Outage Manager.<br>       
-       <strong>Type Network Element:</strong> Tipo de elemento de red asociado. <br>
-       <strong>Network Element ID:</strong> Identificador del elemento de red. <br>
-       <strong>Clients:</strong> Cantidad de clientes afectados. <br>
-       <strong>Time Resolution:</strong> Tiempo de resolución.</p>
-       <!--
-       <strong>Origen:</strong> Sistema origen de la alarma.</p>
-       <strong>origenId:</strong> Identificador de la alarma del origen</p>
-        -->
+    <label for="toggle"><h3>Click para Explicación de columnas</h3></label>
+    <input type="checkbox" id="toggle">
+    <div id="expandableDiv">
+        <h2>Alarmas en el Outage Manager</h2>
+        <p><strong>Alarm Id:</strong>  Id del Outage (o Alarma), interno del Outage Manager (OUM).<br>
+        <strong>Alarm State:</strong> Estado actual de la alarma (en outage y cadena).<br>
+        <strong>Alarm Raised Time:</strong> Fecha y hora que Fault detecto 1er evento de la alarma.<br>
+        <strong>Alarm Cleared Time:</strong> Fecha y hora que Fault desafecto la alarma, muestra los últimos {{ days_configMap }} días.<br>       
+        <strong>Alarm Type:</strong> Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAM...).<br>
+        <strong>Inicio Outage:</strong> Fecha y hora que llego la afectacion al Outage Manager.<br>       
+        <strong>Type Network Element:</strong> Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto de recursos asociados a un nombre, para facilitar su modelado/gestion).<br>
+        <strong>Network Element ID:</strong> Nombre del elemento de red donde aplico el outage. <br>
+        <strong>Clients:</strong> Cantidad de clientes afectados (clientes únicos). <br>
+        <strong>Time Resolution:</strong> Tiempo estimado de resolución (s/tablas).</p>
+        <!--
+        <strong>Origen:</strong> Sistema origen de la alarma.</p>
+        <strong>origenId:</strong> Identificador de la alarma del origen</p>
+            -->
+    </div>
+
 </body>
 </html>
 
