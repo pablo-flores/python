@@ -21,22 +21,20 @@
     
 
     <!-- Barra "Service Impact Analysis" con imagen -->
-    <div class="service-impact-analysis">
-        <img src="{{ url_for('static', filename='telecom.gif') }}" alt="Telecom Logo" class="logo">
-        Service Impact Analysis
-        <div class="refresh-container">
-            <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Refresh - Foto: <span id="local-time"></span></a>        
+    <nav class="banner"> 
+        <div class="service-impact-analysis">
+            <img src="{{ url_for('static', filename='telecom.gif') }}" alt="Telecom Logo" class="logo">
+            Service Impact Analysis
+            <div class="refresh-container">
+                <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Refresh - Foto: <span id="local-time"></span></a>        
+            </div>
         </div>
-    </div>
-
+    </nav>
     
-    <div>
+    <div class="page-content">
         <!-- <h1>Alarmas Activas en el Outage Manager</h1>-->
-        <h2>Alarmas en el Outage Manager</h2>
-    </div>    
-
-    <div>
-        <!-- <h1>Alarmas Activas en el Outage Manager</h1>
+        <!-- <h2>Alarmas en el Outage Manager</h2>
+        <h1>Alarmas Activas en el Outage Manager</h1>
         <h2>Alarmas en el Outage Manager</h2>-->
     
         <table id="alarmTable" style="display:none;">

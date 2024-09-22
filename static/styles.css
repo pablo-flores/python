@@ -60,10 +60,9 @@ tr:nth-child(even) {
 
 /* Estilos generales */
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;  padding: 0;  margin-bottom: 15px;  margin-top: 8px;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
-
 
 /* Estilos para formularios */
 form {
@@ -87,7 +86,7 @@ form {
     font-weight: bold;
     text-transform: none;
     letter-spacing: 2px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);/*: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);/*: 0 4px 6px rgba(0, 0, 0, 0.1);*/
     position: fixed;
     top: 0;
     left: 0;
@@ -225,4 +224,22 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked + #expandableDiv {
     height: auto; /* Altura final cuando el div esté expandido */
+}
+
+
+/* Estilo del banner */
+.banner {
+    /*background-color: #1E90FF;
+    color: white;*/
+    padding: 25px;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* Separación entre el banner y el contenido */
+.page-content {
+    margin-top: 2px; /* Espacio entre el banner y el contenido */
+    /*padding: 20px;*/
+    /*background-color: #f4f4f4;*/
+    /*min-height: 400px; /* Ajusta según el contenido */
 }
