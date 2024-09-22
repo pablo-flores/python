@@ -233,7 +233,7 @@ input[type="checkbox"]:checked + #expandableDiv {
     color: white;*/
     padding: 25px;
     text-align: center;
-    font-size: 24px;
+    font-size: 1.2vw;
 }
 
 /* Separación entre el banner y el contenido */
