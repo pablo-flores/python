@@ -24,6 +24,9 @@
     <div class="service-impact-analysis">
         <img src="{{ url_for('static', filename='telecom.gif') }}" alt="Telecom Logo" class="logo">
         Service Impact Analysis
+        <div class="refresh-container">
+            <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Refresh - Foto: <span id="local-time"></span></a>        
+        </div>
     </div>
     
     <!-- <h1>Alarmas Activas en el Outage Manager</h1>-->
@@ -34,10 +37,10 @@
             <tr>
                 <th class="small-title">Alarm ID</th>
                 <th class="small-title">Alarm State</th>
-                <th class="small-title">Inicio OUM</th>                
-                <th class="small-title">Alarm Raised Time</th>
-                <th class="small-title">Alarm Cleared Time</th>                
+                <th class="small-title" style="text-align: center; width: 1%; ">Alarm Raised Time</th> <!-- Centramos esta columna -->                      
+                <th class="small-title" style="text-align: center; width: 1%; ">Alarm Cleared Time</th> <!-- Centramos esta columna -->      
                 <th class="small-title">Alarm Type</th>
+                <th class="small-title" style="text-align: center; width: 1%; ">Inicio Outage</th> <!-- Centramos esta columna -->                      
                 <th class="small-title">Type Network Element</th>                
                 <th class="small-title">Network Element ID</th>
                 <th class="small-title">Clients</th>
@@ -49,10 +52,10 @@
             <tr title="Origen: {{ alarma.sourceSystemId }}    Relation: {{ alarma.alarmId }} --> {{ alarma.origenId }}">
                 <td>{{ alarma.alarmId }}</td>
                 <td>{{ alarma.alarmState }}</td>
-                <td>{{ alarma.inicioOUM }}</td>                
-                <td>{{ alarma.alarmRaisedTime }}</td>   
-                <td>{{ alarma.alarmClearedTime }}</td>                             
+                <td style="text-align: center; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
+                <td style="text-align: center; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
                 <td>{{ alarma.alarmType }}</td>
+                <td style="text-align: center; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->                                                  
                 <td>{{ alarma.TypeNetworkElement }}</td>                
                 <td>{{ alarma.networkElementId }}</td>
                 <td>{{ alarma.clients }}</td>
@@ -76,10 +79,11 @@
 
     <!-- Botón de refresh -->
     <div class="refresh-container">
+        <!--
         <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Actualizar Alarmas - Foto del <span id="local-time"></span></a>
         <a href="#" class="btn-modern export-btn" data-export="/export/csv">Exportar de base a CSV</a>
         <a href="#" class="btn-modern export-btn" data-export="/export/excel">Exportar de base a Excel</a>
-        <!-- Nuevos botones para descargar el contenido actual de la tabla ->
+        <!- Nuevos botones para descargar el contenido actual de la tabla ->
         <a href="#" class="btn-modern" id="download-csv">Exportar de Tabla a CSV</a>
         <a href="#" class="btn-modern" id="download-excel">Exportar de Tabla a Excel</a> -->
     </div>
@@ -103,10 +107,10 @@
                         <tr>
                             <td>${alarma.alarmId}</td>
                             <td>${alarma.alarmState}</td>
-                            <td>${alarma.inicioOUM}</td>
-                            <td>${alarma.alarmRaisedTime}</td>
-                            <td>${alarma.alarmClearedTime}</td>
+                            <td style="text-align: center; width: 1%; ">${alarma.alarmRaisedTime}</td> <!-- Centrar contenido del TD -->                            
+                            <td style="text-align: center; width: 1%; ">${alarma.alarmClearedTime}</td> <!-- Centrar contenido del TD -->
                             <td>${alarma.alarmType}</td>
+                            <td style="text-align: center; width: 1%; ">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->                            
                             <td>${alarma.TypeNetworkElement}</td>
                             <td>${alarma.networkElementId}</td>
                             <td>${alarma.clients}</td>
@@ -186,7 +190,7 @@
 
         updateLocalTime();
 
-
+/*
         // Captura los eventos de clic en los botones de exportación
         document.querySelectorAll('.export-btn').forEach(function(button) {
             button.addEventListener('click', function(event) {
@@ -209,7 +213,7 @@
                 event.preventDefault();
             });
         });
-
+*/
         // Función para descargar el contenido de la tabla en formato CSV
         document.getElementById('download-csv').addEventListener('click', function () {
             var csv = [];
@@ -248,12 +252,12 @@
     </script>
 
     <h3>Explicación de columnas</h3>
-    <p><strong>Alarm Id:</strong> Identificador único de la alarma. <br>
-       <strong>Alarm State:</strong> Estado actual de la alarma. <br>
-       <strong>Inicio OUM:</strong> Fecha y hora que llego al Outage Manager. <br>
-       <strong>Alarm Raised Time:</strong> Fecha y hora que se detecto la alarma de los últimos {{ days_configMap }} días. <br>
-       <strong>Alarm Cleared Time:</strong> Fecha y hora que se desafecto la alarma de los últimos {{ days_configMap }} días <br>       
-       <strong>Alarm Type:</strong> Tipo de alarma. <br>
+    <p><strong>Alarm Id:</strong>  Id del Outage (o Alarma), interno del Outage Manager (OUM).<br>
+       <strong>Alarm State:</strong> Estado actual de la alarma (en outage y cadena).<br>
+       <strong>Alarm Raised Time:</strong> Fecha y hora que se detecto 1er evento de la alarma.<br>
+       <strong>Alarm Cleared Time:</strong> Fecha y hora que se desafecto la alarma de los últimos {{ days_configMap }} días.<br>       
+       <strong>Alarm Type:</strong> Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAM...).<br>
+       <strong>Inicio Outage:</strong> Fecha y hora que llego al Outage Manager.<br>       
        <strong>Type Network Element:</strong> Tipo de elemento de red asociado. <br>
        <strong>Network Element ID:</strong> Identificador del elemento de red. <br>
        <strong>Clients:</strong> Cantidad de clientes afectados. <br>

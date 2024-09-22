@@ -114,8 +114,7 @@ def export_data(format):
         {
             "$or": [
                 { 
-                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] },
-                    "alarmRaisedTime": { "$gte": days_ago } 
+                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] }
                 },
                 {
                     "alarmState": "CLEARED",

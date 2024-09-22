@@ -7,7 +7,7 @@ h1 {
 }
 
 h2 {
-    font-size: 0.8em;
+    font-size: 1.0em;
     color: #5290d3;
 }
 
@@ -53,7 +53,7 @@ tr:nth-child(even) {
 }
 .footer {
     text-align: right;
-    font-size: 0.8em;
+    font-size: 0.8vw;
     margin-top: 20px;
 }
 
@@ -71,19 +71,9 @@ form {
     padding: 20px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);/*: 0 2px 10px rgba(0, 0, 0, 0.1);*/
 }
 
-/*
-
-h1 {
-    font-size: 2.5em;
-    color: #0056b3;
-    font-weight: bold;
-    text-transform: none;
-    margin-bottom: 30px;
-}
-*/
 
 /* Barra de Service Impact Analysis */
 .service-impact-analysis {
@@ -96,45 +86,22 @@ h1 {
     font-weight: bold;
     text-transform: none;
     letter-spacing: 2px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);/*: 0 4px 6px rgba(0, 0, 0, 0.1);*/
     position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
     align-items: center;
     justify-content: left;
-    height: 25px;  
+    height: 30px;  
     display: flex;
 }
 
-/*
-.service-impact-analysis {
-    background-color: #0056b3;
-    color: rgb(255, 255, 255);
-    padding: 5px 0;
-    width: 100%;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    text-transform: none;
-    letter-spacing: 2px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    height: 40px;  
-    display: flex;
-}
-*/
 /* Estilo de la imagen del logo en la barra */
 .service-impact-analysis .logo {
-    height: 80%; /* Ajusta el tamaño de la imagen al alto de la barra */
-    margin-right: 20px;
-    max-height: 30px; /* Puedes ajustar este valor según el diseño */
+    height: 90%; /* Ajusta el tamaño de la imagen al alto de la barra */
+    margin-right: 10px;
+    max-height: 35px; /* Puedes ajustar este valor según el diseño */
 }
 
 /* Loading spinner */
@@ -153,22 +120,29 @@ h1 {
 }
 
 .refresh-container {
-    text-align: right; /* Alinea el botón a la derecha */
-    margin-bottom: 20px;
+    text-align: right;
+    margin-left: auto; /* Mueve el botón completamente a la derecha */
+    font-size: 0.7vw;
+    display: flex; /* Flexbox para alinear elementos internamente */
+    align-items: center; /* Centra verticalmente el botón */
 }
 
 
 .btn-modern {
-    display: inline-block;
+    display: flex; /* Flexbox para alinear elementos internamente */
     background-color: #5290d3; /* Color de fondo azul moderno */
     color: white; /* Texto en blanco */
     text-decoration: none; /* Elimina el subrayado del enlace */
-    font-size: 16px; /* Tamaño de fuente moderno */
+    font-size: 0.7vw; /* Tamaño de fuente moderno */
     font-weight: 300; /* Un poco más grueso para que se vea bien */
     padding: 4px 20px; /* Espaciado interior para un botón más slim */
     border-radius: 25px; /* Bordes redondeados para un estilo moderno */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+    /*box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Animaciones suaves */
+    /*justify-content: space-between;*/
+    text-align: right;
+    margin-right: 20px;
+    align-items: center; /* Centra verticalmente el botón */
 }
 
 .btn-modern:hover {
@@ -212,4 +186,20 @@ h1 {
 .dataTables_filter {
     text-align: right; /* Alinea el campo de búsqueda a la derecha */
     margin-bottom: 2px; /* Espacio debajo */
+}
+
+/* Estilo para ajustar la columna "Alarm Cleared Time" */
+td.centered-column {
+    padding: 2px 5px; /* Reduce el espacio dentro de la celda */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    width: 1%; /* Hace que la columna se ajuste al contenido */
+    text-align: center; /* Centra el contenido */
+}
+
+/* Opcionalmente puedes aplicarlo también al encabezado */
+th.centered-column {
+    padding: 2px 5px;
+    white-space: nowrap;
+    width: 1%;
+    text-align: center;
 }
