@@ -243,3 +243,9 @@ input[type="checkbox"]:checked + #expandableDiv {
     /*background-color: #f4f4f4;*/
     /*min-height: 400px; /* Ajusta según el contenido */
 }
+
+/* Resaltar la fila al pasar el mouse */
+#alarmTable tbody tr:hover {
+    background-color: #deeeff; /* Cambia a cualquier color que prefieras */
+    cursor: pointer; /* Indica que la fila es interactiva */
+}
