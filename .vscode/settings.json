@@ -1,0 +1,28 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "terminal.integrated.encoding": "utf-8",
+
+
+    "liveServer.settings.port": 5300, // Cambia el puerto si quieres
+    "liveServer.settings.root": "/c:/", // Directorio raíz del servidor
+    "liveServer.settings.fullReload": true, // Para recargar la página entera en cada cambio
+    "liveServer.settings.ignoreFiles": [
+      ".vscode/**",
+      "**/*.scss",
+      "**/*.sass"
+    ], // Archivos a ignorar para recargas
+ 
+    "fiveServer.port": 5500,  // Cambiar el puerto del servidor (por defecto es 5500)
+    "fiveServer.root": "/c:/",  // Carpeta raíz del proyecto que se servirá
+    "fiveServer.open": true,  // Abrir automáticamente en el navegador al iniciar
+    "fiveServer.ignore": [    // Archivos o carpetas a ignorar
+      ".vscode",
+      "node_modules"
+    ],
+    "fiveServer.reload": true,  // Habilitar la recarga automática
+    "fiveServer.remoteReload": false, // Recargar todos los dispositivos conectados a la misma red
+    "fiveServer.highlight": true,  // Resaltar los cambios en el código
+    "fiveServer.php": "/usr/bin/php"  // Ruta para ejecutar PHP si lo necesitas
+  }
+  

@@ -53,8 +53,7 @@ def get_alarmas():
         {
             "$or": [
                 { 
-                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] },
-                    "alarmRaisedTime": { "$gte": days_ago } 
+                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] }                   
                 },
                 {
                     "alarmState": "CLEARED",
@@ -75,7 +74,8 @@ def get_alarmas():
             "origenId": 1,
             "inicioOUM": "$omArrivalTimestamp",
             "alarmRaisedTime": 1,
-            "alarmClearedTime": 1
+            "alarmClearedTime": 1,
+            "alarmReportingTime":1
         }
     ).sort("_id", -1)
 
@@ -93,6 +93,11 @@ def get_alarmas():
 
         if alarma.get('alarmClearedTime'):
             alarma['alarmClearedTime'] = alarma.get('alarmClearedTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            alarma['alarmClearedTime'] = '-'
+
+        if alarma.get('alarmReportingTime'):
+            alarma['alarmReportingTime'] = alarma.get('alarmReportingTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%Y-%m-%d %H:%M:%S')
         else:
             alarma['alarmClearedTime'] = '-'
 
@@ -124,7 +129,7 @@ def export_data(format):
         },
         {   "_id": 0,
             "alarmId": 1, "alarmState": 1, "alarmType": 1, 
-            "inicioOUM": "$omArrivalTimestamp", "alarmRaisedTime": 1, "alarmClearedTime": 1,              
+            "inicioOUM": "$omArrivalTimestamp", "alarmRaisedTime": 1, "alarmReportingTime":1, "alarmClearedTime": 1,              
             "TypeNetworkElement": "$networkElement.type", "networkElementId": 1, "clients": 1,
             "timeResolution": 1, "sourceSystemId": 1, "origenId": 1            
         }
@@ -134,7 +139,7 @@ def export_data(format):
     df = pd.DataFrame(alarmas)
 
     # Reordenar las columnas
-    df = df[['alarmId', 'alarmState', 'alarmType', 'inicioOUM', 'alarmRaisedTime', 'alarmClearedTime', 
+    df = df[['alarmId', 'alarmState', 'alarmType', 'inicioOUM', 'alarmRaisedTime', 'alarmReportingTime', 'alarmClearedTime', 
              'TypeNetworkElement', 'networkElementId', 'clients', 'timeResolution', 'sourceSystemId', 'origenId']]
 
     fecha_actual = datetime.now(buenos_aires_tz).strftime('%Y%m%d%H%M%S')
