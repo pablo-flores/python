@@ -82,22 +82,22 @@ def get_alarmas():
     alarmas = []
     for alarma in cursor:
         if alarma.get('inicioOUM'):
-            alarma['inicioOUM'] = alarma.get('inicioOUM').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M')
+            alarma['inicioOUM'] = alarma.get('inicioOUM').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M:%S')
         else:
             alarma['inicioOUM'] = '-'
 
         if alarma.get('alarmRaisedTime'):
-            alarma['alarmRaisedTime'] = alarma.get('alarmRaisedTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M')
+            alarma['alarmRaisedTime'] = alarma.get('alarmRaisedTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M:%S')
         else:
             alarma['alarmRaisedTime'] = '-'
 
         if alarma.get('alarmClearedTime'):
-            alarma['alarmClearedTime'] = alarma.get('alarmClearedTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M')
+            alarma['alarmClearedTime'] = alarma.get('alarmClearedTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M:%S')
         else:
             alarma['alarmClearedTime'] = '-'
 
         if alarma.get('alarmReportingTime'):
-            alarma['alarmReportingTime'] = alarma.get('alarmReportingTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M')
+            alarma['alarmReportingTime'] = alarma.get('alarmReportingTime').replace(tzinfo=utc).astimezone(buenos_aires_tz).strftime('%m-%d %H:%M:%S')
         else:
             alarma['alarmClearedTime'] = '-'
 
