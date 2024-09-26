@@ -41,23 +41,23 @@
         <table id="alarmTable" style="display:none;">
             <thead>
                 <tr>
-                    <th class="small-title">Alarm Id</th>
-                    <th class="small-title">Other Id</th>                    
-                    <th class="small-title">Alarm State</th>
-                    <th class="small-title" style="text-align: center; width: 1%; ">Alarm Raised Time</th> <!-- Centramos esta columna -->                      
-                    <th class="small-title" style="text-align: center; width: 1%; ">Alarm Cleared Time</th> <!-- Centramos esta columna -->      
-                    <th class="small-title">Alarm Type</th>
-                    <th class="small-title" style="text-align: center; width: 1%; ">Inicio Outage</th> <!-- Centramos esta columna -->                      
-                    <th class="small-title">Type Network Element</th>                
-                    <th class="small-title">Network Element ID</th>
-                    <th class="small-title">Clients</th>
-                    <th class="small-title">Time Resol.</th>
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm Id<span class="tooltip-text">Id del Outage (o Alarma), interno del Outage Manager (OUM).</span></th>
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Other Id<span class="tooltip-text">Id de la ticketera o de Fault.</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm State<span class="tooltip-text">Estado actual de la alarma (en outage y cadena).</span></th>                                                            
+                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Raised Time<span class="tooltip-text">Fecha y hora que Fault detectó el primer evento de la alarma.</span></th>                                        
+                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Cleared Time<span class="tooltip-text">Fecha y hora que Fault desafectó la alarma, muestra los últimos {{ days_configMap }} días.</span></th>                                                                                
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm Type<span class="tooltip-text">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA, etc.).</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Inic Outage<span class="tooltip-text">Fecha y hora que llegó la afectación al Outage Manager.</span></th>                                        
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Type Network Element<span class="tooltip-text">Tipo de elemento de red asociado.</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Network Element ID<span class="tooltip-text">Nombre del elemento de red donde aplicó el outage.</span></th>                                        
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Clients<span class="tooltip-text">Cantidad de clientes afectados (clientes únicos).</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">hs.Res.<span class="tooltip-text">Tiempo estimado de resolución.</span></th>                    
                 </tr>       
             </thead>
             <tbody>
                 {% for alarma in alarmas %}
                 
-                <tr title="Origen: {{ alarma.sourceSystemId }} Alarm Reporting Time: {{ alarma.alarmReportingTime }}">
+                <tr>
                     <td>{{ alarma.alarmId }}</td>
                     <td>{{ alarma.origenId }}</td>                    
                     <td>{{ alarma.alarmState }}</td>
@@ -68,8 +68,7 @@
                     <td>{{ alarma.TypeNetworkElement }}</td>                
                     <td>{{ alarma.networkElementId }}</td>
                     <td>{{ alarma.clients }}</td>
-                    <td>{{ alarma.timeResolution }}</td>
-                    
+                    <td>{{ alarma.timeResolution }}</td>                   
                 </tr>
                 {% else %}
                 <tr>
@@ -105,11 +104,41 @@
                 success: function(response) {
                     let tableBody = '';
                     response.alarmas.forEach(function(alarma) {
+                        // Reemplazar "UPDATED" o "RETRY" por "RAISED" en alarma.alarmState
+                        let alarmState = alarma.alarmState;
+                        if (alarmState === 'UPDATED' || alarmState === 'RETRY') {
+                            alarmState = 'RAISED';
+                        }                        
                         tableBody += `
                         <tr>
-                            <td>${alarma.alarmId}</td>
+                            <td class="tooltip-cell">
+                                ${alarma.alarmId}
+                                <span class="tooltip-text">                           
+                                    <div class="tooltip-row">
+                                        <span class="tooltip-title">Sistema Origen:</span>
+                                        <span class="tooltip-value">${alarma.sourceSystemId}</span>
+                                    </div>
+                                    <div class="tooltip-row">
+                                        <span class="tooltip-title">alarmRaisedTime:</span>
+                                        <span class="tooltip-value">${alarma.alarmRaisedTime}</span>
+                                    </div>
+                                    <div class="tooltip-row">
+                                        <span class="tooltip-title">alarmReportingTime:</span>
+                                        <span class="tooltip-value">${alarma.alarmReportingTime}</span>
+                                    </div>
+                                    <div class="tooltip-row">
+                                        <span class="tooltip-title">siaArrivalTime:</span>
+                                        <span class="tooltip-value">${alarma.inicioOUM}</span>
+                                    </div>
+                                    <div class="tooltip-row">
+                                        <span class="tooltip-title">alarmClearedTime:</span>
+                                        <span class="tooltip-value">${alarma.alarmClearedTime}</span>
+                                    </div>
+                                </span>
+                            </td>
+
                             <td>${alarma.origenId}</td>
-                            <td>${alarma.alarmState}</td>
+                            <td>${alarmState}</td>
                             <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmRaisedTime}</td> <!-- Centrar contenido del TD -->                            
                             <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmClearedTime}</td> <!-- Centrar contenido del TD -->
                             <td>${alarma.alarmType}</td>
@@ -144,6 +173,45 @@
                             "type": "num" // Definir la columna como numérica
                         }
                         ],
+                        "drawCallback": function() {
+                            // Re-inicializa los tooltips de las celdas
+                            $('.tooltip-cell').each(function() {
+                                var tooltip = $(this).find('.tooltip-text');
+                                $(this).hover(function() {
+                                    tooltip.css('visibility', 'visible').css('opacity', '1');
+                                }, function() {
+                                    tooltip.css('visibility', 'hidden').css('opacity', '0');
+                                });
+                            });
+
+                            // Re-inicializa los tooltips de los encabezados
+                            $('.tooltip-header').each(function() {
+                                var tooltip = $(this).find('.tooltip-text');
+                                $(this).hover(function() {
+                                    tooltip.css('visibility', 'visible').css('opacity', '1');
+                                    
+                                    // Obtener la posición del tooltip
+                                    var tooltipRect = tooltip[0].getBoundingClientRect();
+                                    var windowWidth = $(window).width();
+
+                                    // Ajustar posición si el tooltip se sale de la pantalla por la derecha
+                                    if (tooltipRect.right > windowWidth) {
+                                        tooltip.css('left', 'auto').css('right', '0').css('transform', 'translateX(-5%)');
+                                    }
+
+                                    // Ajustar posición si el tooltip se sale de la pantalla por la izquierda
+                                    if (tooltipRect.left < 0) {
+                                        tooltip.css('left', '0').css('right', 'auto').css('transform', 'translateX(5%)');
+                                    }
+
+                                }, function() {
+                                    tooltip.css('visibility', 'hidden').css('opacity', '0');
+                                    // Restaurar el estado original del tooltip
+                                    tooltip.css('left', '50%').css('right', 'auto').css('transform', 'translateX(-50%)');
+                                });
+                            });
+                        },
+
                         "language": {
                             "lengthMenu": "Mostrar _MENU_ entradas",
                             "zeroRecords": "No se encontraron resultados",
@@ -160,6 +228,9 @@
                             "loadingRecords": "Cargando...",
                             "processing": "Procesando...",
                             "emptyTable": "No hay datos disponibles en la tabla"
+                        },
+                        "search": {
+                            "caseInsensitive": true  
                         }
                     });
     
@@ -172,7 +243,6 @@
                 }
             });
         });
-    
     
    
         // Function to get local time
@@ -252,9 +322,30 @@
             document.body.removeChild(downloadLink);
         });
 
+        // Obtener los elementos del DOM
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("openModalBtn");
+        var span = document.getElementsByClassName("close")[0];
+
+        // Abrir el modal al hacer clic en el botón
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Cerrar el modal al hacer clic en la 'X'
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Cerrar el modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
 
     </script>
-
+<!--
     <label for="toggle"><h3>Click para Explicación de columnas</h3></label>
     <input type="checkbox" id="toggle">
     <div id="expandableDiv">
@@ -270,12 +361,8 @@
         <strong>Network Element ID:</strong> Nombre del elemento de red donde aplico el outage. <br>
         <strong>Clients:</strong> Cantidad de clientes afectados (clientes únicos). <br>
         <strong>Time Resolution:</strong> Tiempo estimado de resolución (s/tablas).</p>
-        <!--
-        <strong>Origen:</strong> Sistema origen de la alarma.</p>
-        <strong>origenId:</strong> Identificador de la alarma del origen</p>
-            -->
     </div>
-
+-->
 </body>
 </html>
 

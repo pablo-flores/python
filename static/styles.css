@@ -26,7 +26,7 @@ h4 {
 /* Estilos para la tabla */
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 95%;
     table-layout: auto;
     /* Las columnas se ajustan según el contenido */
 }
@@ -301,7 +301,7 @@ input[type="checkbox"]:checked+#expandableDiv {
     color: #000000;
     /* Cambia a cualquier color que prefieras */
     /*font-weight: bold;*/
-    /*cursor: pointer; /* Indica que la fila es interactiva */
+    cursor: pointer; /* Indica que la fila es interactiva */
 }
 
 table.dataTable tbody th,
@@ -311,10 +311,164 @@ table.dataTable tbody td {
 }
 
 
-/**********************************************************************
+/**************************************************/
+/* Contenedor del tooltip */
+.tooltip-cell {
+    position: relative;
+    
+    cursor: pointer;
+}
+
+/* Estilo del tooltip */
+.tooltip-text {
+    visibility: hidden;
+    background-color: #333; /* Fondo gris oscuro */
+    color: #fff; /* Texto blanco */
+    text-align: left; /* Alinear el texto del tooltip */
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 9999;
+    bottom: 125%;
+    left: 70%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);
+    font-size: 12px; /* Tamaño de letra más pequeño */
+}
+
+/* Mostrar el tooltip al pasar el ratón */
+.tooltip-cell:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Estructura del contenido del tooltip */
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px; /* Espacio entre filas */
+}
+
+/* Estilo para el título */
+.tooltip-title {
+    font-weight: bold;
+    margin-right: 10px; /* Espacio entre título y valor */
+}
+
+/* Estilo para el valor */
+.tooltip-value {
+    text-align: right;
+    white-space: nowrap; /* Evita que los valores se rompan en múltiples líneas */
+}
 
 
 
+/**************************************************/
+
+/* Contenedor del tooltip para el encabezado */
+.tooltip-header {
+    position: relative;
+    /*display: inline-block;*/
+    cursor: pointer;
+}
+
+/* Estilo del tooltip */
+.tooltip-header .tooltip-text {
+    visibility: hidden;
+    background-color: #0056b3; 
+    color: #ffffff; /* Texto blanco */
+    text-align: center;
+    border-radius: 25px;
+    padding: 5px;
+    position: absolute;
+    z-index: 9999;
+    bottom: 125%; /* Mostrar arriba del encabezado */
+    left: 70%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);
+}
+
+
+/* Flecha del tooltip (Eliminar o comentar para quitarla) */
+/*
+.tooltip-header .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; 
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
 */
 
+/* Mostrar el tooltip al pasar el ratón */
+.tooltip-header:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
 
+
+
+
+/**************************************************/
+
+/*POP Modal*/
+
+/* Estilos para el botón */
+#openModalBtn {
+    padding: 10px 20px;
+    background-color: #5290d3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos para el modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo en la pantalla */
+    z-index: 9999; /* Sobre otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho total */
+    height: 100%; /* Altura total */
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+}
+
+/* Estilos para el contenido del modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Centrado verticalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del modal */
+    max-width: 600px; /* Ancho máximo */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el botón de cerrar */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/**************************************************/
