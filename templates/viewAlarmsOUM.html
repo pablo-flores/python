@@ -344,6 +344,48 @@
             }
         }
 
+        /*Ajustar Dinámicamente la Posición del Tooltip*/
+        $(document).ready(function() {
+            // Ajuste del tooltip en hover
+            $('.tooltip-cell').hover(function() {
+                var tooltip = $(this).find('.tooltip-text');
+        
+                // Mostrar el tooltip para calcular su posición
+                tooltip.css('visibility', 'visible').css('opacity', '1');
+        
+                // Obtener la posición y dimensiones del tooltip
+                var tooltipRect = tooltip[0].getBoundingClientRect();
+                var windowWidth = $(window).width();
+                var windowHeight = $(window).height();
+        
+                // Ajustar la posición si se sale de los límites de la pantalla
+                var left = tooltipRect.left;
+                var right = tooltipRect.right;
+                var top = tooltipRect.top;
+        
+                // Ajustar si se sale por la izquierda
+                if (left < 0) {
+                    tooltip.css('left', '0').css('right', 'auto');
+                }
+        
+                // Ajustar si se sale por la derecha
+                if (right > windowWidth) {
+                    tooltip.css('left', 'auto').css('right', '0');
+                }
+        
+                // Ajustar si se sale por la parte superior
+                if (top < 0) {
+                    tooltip.css('top', '100%').css('bottom', 'auto');
+                }
+            }, function() {
+                // Ocultar el tooltip y restaurar su posición original
+                var tooltip = $(this).find('.tooltip-text');
+                tooltip.css('visibility', 'hidden').css('opacity', '0');
+                tooltip.css('left', '').css('right', '').css('top', '').css('bottom', '');
+            });
+        });
+        
+
     </script>
 <!--
     <label for="toggle"><h3>Click para Explicación de columnas</h3></label>
