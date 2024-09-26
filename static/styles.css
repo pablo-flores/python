@@ -337,8 +337,9 @@ table.dataTable tbody td {
     white-space: nowrap;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);
     font-size: 12px; /* Tamaño de letra más pequeño */
-    left: 70%; /* Mover el tooltip más hacia la derecha */
+    left: 30%; /* Mover el tooltip más hacia la derecha */
     transform: translateX(0%); /* Ajustar la posición horizontal */    
+    border: 1px solid #d32222; /* Borde opcional para mayor definición */ 
 }
 
 /* Mostrar el tooltip al pasar el ratón */
@@ -373,28 +374,34 @@ table.dataTable tbody td {
 /* Contenedor del tooltip para el encabezado */
 .tooltip-header {
     position: relative;
-    /*display: inline-block;*/
     cursor: pointer;
 }
 
 /* Estilo del tooltip */
 .tooltip-header .tooltip-text {
     visibility: hidden;
-    background-color: #387bc3; 
+    opacity: 0;
+    width: auto; /* Ajusta el ancho del tooltip según el contenido */
+    /*background-color: #387bc3; */
+    background-color: #2A3E52; /* Color de fondo azul grisáceo oscuro */
     color: #ffffff; /* Texto blanco */
     text-align: center;
-    border-radius: 25px;
+    border-radius: 8px;
+    padding: 8px 15px; /* Espaciado interno */
     padding: 5px;
     position: absolute;
     z-index: 9999;
-    bottom: 125%; /* Mostrar arriba del encabezado */
+    bottom: 120%; /* Mostrar arriba del encabezado */
     left: 70%;
     transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);
-    font-size: 12px; /* Tamaño de letra más pequeño */    
+    transition: opacity 0.6s ease, transform 0.3s ease; /* Transición suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    font-size: 1.0em; /* Tamaño de fuente más pequeño */
+    white-space: nowrap; /* Evitar que el texto se envuelva */
+    /*box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);*/
+    /*font-size: 12px; /* Tamaño de letra más pequeño */   
+    border: 1px solid #66c8f6; /* Borde opcional para mayor definición */ 
 }
 
 
@@ -416,6 +423,7 @@ table.dataTable tbody td {
 .tooltip-header:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
+    transform: translateX(-50%) translateY(-10px); /* Eleva el tooltip */
 }
 
 
@@ -475,3 +483,5 @@ table.dataTable tbody td {
 }
 
 /**************************************************/
+
+/********************************************************/

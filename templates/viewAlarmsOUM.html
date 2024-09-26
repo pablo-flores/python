@@ -7,9 +7,12 @@
     <title>Alarmas del Outage Manager</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Archivos CSS locales -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/jquery.dataTables.min.css') }}">
+    <!-- Archivos JavaScript locales -->
+    <script src="{{ url_for('static', filename='vendor/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/jquery.dataTables.min.js') }}"></script>
+    
 </head>
 
 
@@ -41,17 +44,17 @@
         <table id="alarmTable" style="display:none;">
             <thead>
                 <tr>
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm Id<span class="tooltip-text">Id del Outage (o Alarma), interno del Outage Manager (OUM).</span></th>
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Other Id<span class="tooltip-text">Id de la ticketera o de Fault.</span></th>                    
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm State<span class="tooltip-text">Estado actual de la alarma (en outage y cadena).</span></th>                                                            
-                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Raised Time<span class="tooltip-text">Fecha y hora que Fault detectó el primer evento de la alarma.</span></th>                                        
-                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Cleared Time<span class="tooltip-text">Fecha y hora que Fault desafectó la alarma, muestra los últimos {{ days_configMap }} días.</span></th>                                                                                
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm Type<span class="tooltip-text">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA, etc.).</span></th>                    
-                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Inic Outage<span class="tooltip-text">Fecha y hora que llegó la afectación al Outage Manager.</span></th>                                        
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Type Network Element<span class="tooltip-text">Tipo de elemento de red asociado.</span></th>                    
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Network Element ID<span class="tooltip-text">Nombre del elemento de red donde aplicó el outage.</span></th>                                        
-                    <th class="tooltip-header" style="font-size: 0.6vw;">Clients<span class="tooltip-text">Cantidad de clientes afectados (clientes únicos).</span></th>                    
-                    <th class="tooltip-header" style="font-size: 0.6vw;">hs.Res.<span class="tooltip-text">Tiempo estimado de resolución.</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm Id<span class="tooltip-text">Alarm Id: Id del Outage (o Alarma), interno del Outage Manager (OUM).</span></th>
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Other Id<span class="tooltip-text">Other Id: Id de la ticketera o de Fault.</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm State<span class="tooltip-text">Alarm State: Estado actual de la alarma (en outage y cadena).</span></th>                                                            
+                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Raised Time<span class="tooltip-text">Raised Time: Fecha y hora que Fault detectó el primer evento de la alarma.</span></th>                                        
+                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Cleared Time<span class="tooltip-text">Cleared Time: Fecha y hora que Fault desafectó la alarma, muestra los últimos {{ days_configMap }} días.</span></th>                                                                                
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Alarm Type<span class="tooltip-text">Alarm Type: Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA, etc.).</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw; text-align: center; width: 1%;">Inic Outage<span class="tooltip-text">Inic Outage: Fecha y hora que llegó la afectación al Outage Manager.</span></th>                                        
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Type Network Element<span class="tooltip-text">Type Network Element: Tipo de elemento de red asociado.</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Network Element ID<span class="tooltip-text">Network Element ID: Nombre del elemento de red donde aplicó el outage.</span></th>                                        
+                    <th class="tooltip-header" style="font-size: 0.6vw;">Clients<span class="tooltip-text">Clients: Cantidad de clientes afectados (clientes únicos).</span></th>                    
+                    <th class="tooltip-header" style="font-size: 0.6vw;">hs.Res.<span class="tooltip-text">hs.Res.: Tiempo estimado de resolución.</span></th>                    
                 </tr>       
             </thead>
             <tbody>
