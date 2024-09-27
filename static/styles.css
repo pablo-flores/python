@@ -26,9 +26,8 @@ h4 {
 /* Estilos para la tabla */
 table {
     border-collapse: collapse;
-    width: 95%;
-    table-layout: auto;
-    /* Las columnas se ajustan según el contenido */
+    width: 100%;
+    table-layout: auto; /* Las columnas se ajustan según el contenido */
 }
 
 tr {
@@ -39,14 +38,12 @@ tr {
 th,
 td {
     border: 1px solid #000;
-    padding: 2px;
+    padding: 2px; /* Espaciado interior */
     text-align: left;
     font-family: Arial, sans-serif;
     /*font-size: 14px; /* Ajusta el tamaño de la letra aquí */
-    font-size: 0.8vw;
-    /* Tamaño de letra relativo al ancho de la ventana */
-    white-space: nowrap;
-    /* Evita que el contenido se rompa en múltiples líneas */
+    font-size: 0.8vw;   /* Tamaño de letra relativo al ancho de la ventana */
+    white-space: nowrap; /* Evita que el contenido se rompa en múltiples líneas */
 }
 
 /* Ajustar el ancho del contenido, pero permitir la ruptura de texto si es muy largo */
@@ -86,6 +83,13 @@ form {
     border-radius: 8px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     /*: 0 2px 10px rgba(0, 0, 0, 0.1);*/
+}
+
+/* Elimina margen y padding por defecto */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Opcional: Oculta el desplazamiento horizontal */
 }
 
 
@@ -151,44 +155,30 @@ form {
 
 
 .btn-modern {
-    display: flex;
-    /* Flexbox para alinear elementos internamente */
-    background-color: #5290d3;
-    /* Color de fondo azul moderno */
-    color: white;
-    /* Texto en blanco */
-    text-decoration: none;
-    /* Elimina el subrayado del enlace */
-    font-size: 0.7vw;
-    /* Tamaño de fuente moderno */
-    font-weight: 300;
-    /* Un poco más grueso para que se vea bien */
-    padding: 4px 20px;
-    /* Espaciado interior para un botón más slim */
-    border-radius: 25px;
-    /* Bordes redondeados para un estilo moderno */
+    display: flex;    /* Flexbox para alinear elementos internamente */
+    background-color: #5290d3;    /* Color de fondo azul moderno */
+    color: white;    /* Texto en blanco */
+    text-decoration: none;    /* Elimina el subrayado del enlace */
+    font-size: 0.7vw;    /* Tamaño de fuente moderno */
+    font-weight: 300;    /* Un poco más grueso para que se vea bien */
+    padding: 4px 20px;    /* Espaciado interior para un botón más slim */
+    border-radius: 25px;    /* Bordes redondeados para un estilo moderno */
     /*box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    /* Animaciones suaves */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;    /* Animaciones suaves */
     /*justify-content: space-between;*/
     text-align: right;
     margin-right: 20px;
-    align-items: center;
-    /* Centra verticalmente el botón */
+    align-items: center;  /* Centra verticalmente el botón */
 }
 
 .btn-modern:hover {
-    background-color: #0056b3;
-    /* Color de fondo más oscuro al pasar el mouse */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-    /* Sombra más fuerte al pasar el mouse */
+    background-color: #0056b3;    /* Color de fondo más oscuro al pasar el mouse */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);    /* Sombra más fuerte al pasar el mouse */
 }
 
 .btn-modern:active {
-    background-color: #004085;
-    /* Color más oscuro cuando se hace clic */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    /* Sombra reducida cuando se hace clic */
+    background-color: #004085;    /* Color más oscuro cuando se hace clic */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);    /* Sombra reducida cuando se hace clic */
 }
 
 #loading-message {
@@ -205,46 +195,31 @@ form {
 }
 
 .dataTables_filter input {
-    border: 2px solid #007bff;
-    /* Borde moderno */
-    border-radius: 25px;
-    /* Bordes redondeados */
-    padding: 2px 2px;
-    /* Espaciado interior */
-    font-size: 16px;
-    /* Tamaño de la fuente */
-    outline: none;
-    /* Elimina el borde de enfoque predeterminado */
-    transition: border-color 0.3s ease;
-    /* Suaviza la transición del borde */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* Sombra suave para darle profundidad */
+    border: 2px solid #007bff;    /* Borde moderno */
+    border-radius: 25px;    /* Bordes redondeados */
+    padding: 2px 2px;    /* Espaciado interior */
+    font-size: 16px;    /* Tamaño de la fuente */
+    outline: none;    /* Elimina el borde de enfoque predeterminado */
+    transition: border-color 0.3s ease;    /* Suaviza la transición del borde */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);    /* Sombra suave para darle profundidad */
 }
 
 .dataTables_filter input:focus {
-    border-color: #0056b3;
-    /* Cambia el color del borde al hacer foco */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
-    /* Aumenta la sombra al hacer foco */
+    border-color: #0056b3;    /* Cambia el color del borde al hacer foco */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);    /* Aumenta la sombra al hacer foco */
 }
 
 .dataTables_filter {
-    text-align: right;
-    /* Alinea el campo de búsqueda a la derecha */
-    margin-bottom: 2px;
-    /* Espacio debajo */
+    text-align: right;    /* Alinea el campo de búsqueda a la derecha */
+    margin-bottom: 2px;    /* Espacio debajo */
 }
 
 /* Estilo para ajustar la columna "Alarm Cleared Time" */
 td.centered-column {
-    padding: 2px 2px;
-    /* Reduce el espacio dentro de la celda */
-    white-space: nowrap;
-    /* Evita que el texto se divida en varias líneas */
-    width: 1%;
-    /* Hace que la columna se ajuste al contenido */
-    text-align: center;
-    /* Centra el contenido */
+    padding: 2px 2px;    /* Reduce el espacio dentro de la celda */
+    white-space: nowrap;    /* Evita que el texto se divida en varias líneas */
+    width: 1%;    /* Hace que la columna se ajuste al contenido */
+    text-align: center;    /* Centra el contenido */
 }
 
 
@@ -253,16 +228,13 @@ td.centered-column {
     height: 0;
     overflow: hidden;
 
-    transition: border-color 0.9s ease;
-    /* Suaviza la transición del borde */
+    transition: border-color 0.9s ease;    /* Suaviza la transición del borde */
     /*background-color: lightblue;*/
-    border-color: #123254;
-    /* Cambia el color del borde al hacer foco */
+    border-color: #123254;    /* Cambia el color del borde al hacer foco */
     padding: 0 10px;
 
     box-sizing: border-box;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* Sombra suave para darle profundidad */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);    /* Sombra suave para darle profundidad */
 }
 
 input[type="checkbox"] {
@@ -270,8 +242,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked+#expandableDiv {
-    height: auto;
-    /* Altura final cuando el div esté expandido */
+    height: auto;    /* Altura final cuando el div esté expandido */
 }
 
 
@@ -286,8 +257,7 @@ input[type="checkbox"]:checked+#expandableDiv {
 
 /* Separación entre el banner y el contenido */
 .page-content {
-    margin-top: 2px;
-    /* Espacio entre el banner y el contenido */
+    margin-top: 2px;    /* Espacio entre el banner y el contenido */
     overflow: visible;
     /*padding: 20px;*/
     /*background-color: #f4f4f4;*/
@@ -396,12 +366,12 @@ table.dataTable tbody td {
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.6s ease, transform 0.3s ease; /* Transición suave */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Sombra */
     font-size: 1.0em; /* Tamaño de fuente más pequeño */
     white-space: nowrap; /* Evitar que el texto se envuelva */
     /*box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);*/
     /*font-size: 12px; /* Tamaño de letra más pequeño */   
-    border: 1px solid #66c8f6; /* Borde opcional para mayor definición */ 
+    border: 1px solid #90dcff; /* Borde opcional para mayor definición */ 
 }
 
 
@@ -483,5 +453,17 @@ table.dataTable tbody td {
 }
 
 /**************************************************/
+
+/* Ocultar el botón por defecto */
+#download-csv {
+    display: none;
+}
+
+/* Mostrar el botón solo al imprimir */
+@media print {
+    #download-csv {
+        display: block;
+    }
+}
 
 /********************************************************/

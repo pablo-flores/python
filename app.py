@@ -102,7 +102,10 @@ def get_alarmas():
             alarma['alarmClearedTime'] = '-'
 
         if not alarma.get('timeResolution'):
-            alarma['timeResolution'] = '-'            
+            alarma['timeResolution'] = '-'     
+
+        if alarma.get('alarmState') in ['UPDATED', 'RETRY']:
+            alarma['alarmState'] = 'RAISED'                   
 
         alarmas.append(alarma)
 
@@ -136,6 +139,12 @@ def export_data(format):
     ).sort("_id", -1)
 
     alarmas = list(cursor)
+
+    # Reemplazar "UPDATED" y "RETRY" por "RAISED" en el estado de la alarma
+    for alarma in alarmas:
+        if alarma.get('alarmState') in ['UPDATED', 'RETRY']:
+            alarma['alarmState'] = 'RAISED'
+
     df = pd.DataFrame(alarmas)
 
     # Reordenar las columnas

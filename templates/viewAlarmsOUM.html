@@ -70,8 +70,8 @@
                     <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->                                                  
                     <td>{{ alarma.TypeNetworkElement }}</td>                
                     <td>{{ alarma.networkElementId }}</td>
-                    <td>{{ alarma.clients }}</td>
-                    <td>{{ alarma.timeResolution }}</td>                   
+                    <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.clients }}</td> <!-- Centrar contenido del TD -->                                                                      
+                    <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.timeResolution }}</td> <!-- Centrar contenido del TD -->                                                  
                 </tr>
                 {% else %}
                 <tr>
@@ -88,13 +88,151 @@
         <p>Espere, procesando descarga ...</p>
     </div>
 
-    <!-- iframe invisible para manejar la descarga 
-    <iframe id="download-frame" style="display: none;"></iframe>-->
+    <!-- iframe invisible para manejar la descarga -->
+    <iframe id="download-frame" style="display: none;"></iframe>
+    <button id="download-csv" style="display: none;">Descargar CSV</button>
+    <button id="download-excel" style="display: none;">Descargar CSV</button>
 
-    <!-- Include necessary JS libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!-- Include necessary JS libraries locally -->
+    <script src="{{ url_for('static', filename='vendor/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/xlsx.full.min.js') }}"></script>
+
+
+
     <script>
+
+        document.addEventListener('keydown', function(event) {
+            // Verifica si se ha presionado Ctrl + I
+            if (event.ctrlKey && event.key === 'e') {
+                // Prevenir la acción predeterminada
+                event.preventDefault();
+        
+                // Dispara el evento de clic en el botón oculto
+                document.getElementById('download-excel').click();
+            }
+        });
+        
+        // Escucha el evento de clic del botón para realizar la acción de descargar Excel
+        document.getElementById('download-excel').addEventListener('click', function () {
+            
+            document.getElementById('loading-message').style.display = 'block';
+    
+          
+            // Obtén una instancia de la tabla DataTable
+            var table = $('#alarmTable').DataTable();
+        
+            // Desactivar la paginación para acceder a todas las filas
+            table.page.len(-1).draw();
+        
+            // Inicializa un array para almacenar las filas
+            var rows = [];
+            
+            // Selecciona todas las filas visibles en la tabla
+            document.querySelectorAll("#alarmTable tr").forEach(function(row) {
+                var rowData = Array.from(row.querySelectorAll("td, th")).map(function(col) {
+                    return col.innerText;
+                });
+                rows.push(rowData);
+            });
+        
+            // Crea una hoja de trabajo (worksheet) con los datos
+            var worksheet = XLSX.utils.aoa_to_sheet(rows);
+        
+            // Crea un libro de trabajo (workbook) y añade la hoja
+            var workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Alarmas");
+        
+            // Genera el archivo Excel
+            var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        
+            // Crear el Blob para el archivo Excel
+            var excelFile = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            var downloadLink = document.createElement("a");
+            downloadLink.download = 'SIA_alarmas_' + new Date().toISOString().slice(0, 19).replace(/:/g, "-") + '.xlsx';
+            downloadLink.href = URL.createObjectURL(excelFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        
+            // Restaurar la paginación original
+            table.page.len(15).draw(); // Cambia el número 15 al valor de la paginación por defecto de tu tabla
+
+            // Ocultar el mensaje de "Espere..." después de 5 segundos
+            setTimeout(function() {
+                document.getElementById('loading-message').style.display = 'none';
+            }, 10000); // Puedes ajustar el tiempo si es necesario
+            
+            
+        });
+        
+
+        document.addEventListener('keydown', function(event) {
+            // Verifica si se ha presionado Ctrl + P
+            if (event.ctrlKey && event.key === 'I') {
+                // Prevenir la acción predeterminada de imprimir
+                event.preventDefault();
+        
+                // Dispara el evento de clic en el botón oculto
+                document.getElementById('download-csv').click();
+            }
+        });
+        
+       // Escucha el evento de clic del botón para realizar la acción deseada
+        document.getElementById('download-csv').addEventListener('click', function () {
+
+            document.getElementById('loading-message').style.display = 'block';
+
+            // Obtén una instancia de la tabla DataTable
+            var table = $('#alarmTable').DataTable();
+        
+            // Desactivar la paginación para acceder a todas las filas
+            table.page.len(-1).draw();
+        
+            // Aquí puedes poner el código para descargar el archivo CSV
+            console.log('Descargando CSV...');
+        
+            // Inicializa el array para almacenar las filas
+            var csv = [];
+            
+            // Selecciona todas las filas visibles en la tabla
+            var rows = document.querySelectorAll("#alarmTable tr");
+        
+            // Recorre cada fila y extrae los datos de cada celda
+            rows.forEach(function(row) {
+                var cols = row.querySelectorAll("td, th");
+                var rowData = Array.from(cols).map(function(col) {
+                    return col.innerText;
+                });
+                csv.push(rowData.join(","));
+            });
+        
+            // Crear el archivo CSV
+            var csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+            var downloadLink = document.createElement("a");
+            downloadLink.download = 'SIA_alarmas_' + new Date().toISOString().slice(0, 19).replace(/:/g, "-") + '.csv';            
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        
+            // Restaurar la paginación original
+            table.page.len(15).draw(); // Cambia el número 15 al valor de la paginación por defecto de tu tabla
+
+            // Ocultar el mensaje de "Espere..." después de 5 segundos
+            setTimeout(function() {
+                document.getElementById('loading-message').style.display = 'none';
+            }, 10000); // Puedes ajustar el tiempo si es necesario
+            
+        });
+
+        
+
+
+ 
 
         $(document).ready(function() {
             $('#loading').show();
@@ -108,10 +246,13 @@
                     let tableBody = '';
                     response.alarmas.forEach(function(alarma) {
                         // Reemplazar "UPDATED" o "RETRY" por "RAISED" en alarma.alarmState
+                        
                         let alarmState = alarma.alarmState;
+                        /*
                         if (alarmState === 'UPDATED' || alarmState === 'RETRY') {
                             alarmState = 'RAISED';
-                        }                        
+                        }          
+                           */           
                         tableBody += `
                         <tr>
                             <td class="tooltip-cell">
@@ -145,17 +286,19 @@
                             <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmRaisedTime}</td> <!-- Centrar contenido del TD -->                            
                             <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmClearedTime}</td> <!-- Centrar contenido del TD -->
                             <td>${alarma.alarmType}</td>
-                            <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->                            
+                            <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->
                             <td>${alarma.TypeNetworkElement}</td>
                             <td>${alarma.networkElementId}</td>
-                            <td>${alarma.clients}</td>
-                            <td>${alarma.timeResolution}</td>
+                            <td style="text-align: right;padding: 2px 4px;width: 1%;">${alarma.clients}</td> <!-- Centrar contenido del TD -->
+                            <td style="text-align: right;padding: 2px 8px;width: 1%;">${alarma.timeResolution}</td> <!-- Centrar contenido del TD -->
                         </tr>`;
                     });
                     $('#alarmTable tbody').html(tableBody);
     
                     // Inicializar DataTable
                     $('#alarmTable').DataTable({
+                        //"scrollX": true, // Habilita el desplazamiento horizontal
+                        "autoWidth": true, // Previene el ajuste automático del ancho de las columnas
                         "paging": true,
                         "searching": true,
                         "ordering": true,
@@ -163,16 +306,12 @@
                         "pageLength": 15,  // Cambia la cantidad de registros mostrados a 15
                         "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
                         "columnDefs": [
-                        { 
-                            "targets": 9, // El índice de la columna 'Clients' (empieza desde 0)
-                            "type": "num" // Define que esta columna debe tratarse como numérica
-                        },
-                        { 
-                            "targets": 10, // Índice de la columna 'Time Resolution'
+                        {
+                            "targets": 9, // Índice de la columna 'Clients'
                             "type": "num" // Definir la columna como numérica
                         },
                         { 
-                            "targets": 0, // Índice de la columna 'alarm Id'
+                            "targets": 10, // Índice de la columna 'Time Resolution'
                             "type": "num" // Definir la columna como numérica
                         }
                         ],
@@ -247,7 +386,7 @@
             });
         });
     
-   
+  
         // Function to get local time
         function updateLocalTime() {
             const now = new Date();
@@ -266,7 +405,7 @@
 
         updateLocalTime();
 
-/*
+
         // Captura los eventos de clic en los botones de exportación
         document.querySelectorAll('.export-btn').forEach(function(button) {
             button.addEventListener('click', function(event) {
@@ -289,63 +428,8 @@
                 event.preventDefault();
             });
         });
-*/
-        // Función para descargar el contenido de la tabla en formato CSV
-        document.getElementById('download-csv').addEventListener('click', function () {
-            var csv = [];
-            var rows = document.querySelectorAll("#alarmTable tr");
 
-            rows.forEach(function(row) {
-                var cols = row.querySelectorAll("td, th");
-                var rowData = Array.from(cols).map(function(col) {
-                    return col.innerText;
-                });
-                csv.push(rowData.join(","));
-            });
 
-            var csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
-            var downloadLink = document.createElement("a");
-            fecha_actual = datetime.now().strftime('%Y%m%d%H%M%S')
-            downloadLink.download = 'SIA_alarmas_'+fecha_actual+'.csv';            
-            downloadLink.href = window.URL.createObjectURL(csvFile);
-            downloadLink.style.display = "none";
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-        });
-
-        // Función para descargar el contenido de la tabla en formato Excel (simple formato)
-        document.getElementById('download-excel').addEventListener('click', function () {
-            var tableHTML = document.getElementById("alarmTable").outerHTML.replace(/ /g, '%20');
-            var downloadLink = document.createElement("a");
-            document.body.appendChild(downloadLink);
-            downloadLink.href = 'data:application/vnd.ms-excel,' + tableHTML;
-            fecha_actual = datetime.now().strftime('%Y%m%d%H%M%S')
-            downloadLink.download = 'SIA_alarmas_'+fecha_actual+'.xls';
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-        });
-
-        // Obtener los elementos del DOM
-        var modal = document.getElementById("myModal");
-        var btn = document.getElementById("openModalBtn");
-        var span = document.getElementsByClassName("close")[0];
-
-        // Abrir el modal al hacer clic en el botón
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // Cerrar el modal al hacer clic en la 'X'
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Cerrar el modal al hacer clic fuera de él
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
 
         /*Ajustar Dinámicamente la Posición del Tooltip*/
         $(document).ready(function() {
@@ -408,6 +492,7 @@
         <strong>Time Resolution:</strong> Tiempo estimado de resolución (s/tablas).</p>
     </div>
 -->
+
 </body>
 </html>
 

@@ -86,7 +86,24 @@ waitress==3.0.0
 ├── config.yaml         # Archivo de configuración para MongoDB
 ├── requirements.txt    # Lista de dependencias del proyecto
 └── README.md           # Este archivo
+
+project_root/
+│
+├── static/
+│   ├── vendor/
+│   │   ├── js/
+│   │   │   ├── jquery-3.6.0.min.js
+│   │   │   ├── jquery.dataTables.min.js
+│   │   │   ├── xlsx.full.min.js
+│   │   └── ...
+│   └── ...
+├── templates/
+│   ├── your_file.html
+│   └── ...
+└── app.py
+
 ```
+
 
 ## Contribuir
 
