@@ -376,8 +376,7 @@ table.dataTable tbody td {
 
 
 /* Flecha del tooltip (Eliminar o comentar para quitarla) */
-/*
-.tooltip-header .tooltip-text::after {
+.tooltip-header .tooltip-text:after {
     content: "";
     position: absolute;
     top: 100%; 
@@ -387,7 +386,7 @@ table.dataTable tbody td {
     border-style: solid;
     border-color: #333 transparent transparent transparent;
 }
-*/
+
 
 /* Mostrar el tooltip al pasar el ratón */
 .tooltip-header:hover .tooltip-text {
@@ -476,4 +475,11 @@ table.dataTable tbody td {
 
 /********************************************************/    
 
+/* Style for the container to set font size to #vw */
+.small-text {
+    font-size: 0.9vw;
+}
 
+.small-textExpandableDiv {
+    font-size: 0.9vw;
+}

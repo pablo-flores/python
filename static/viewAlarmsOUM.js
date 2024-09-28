@@ -216,9 +216,11 @@ $(document).ready(function() {
                         "type": "num" // Definir la columna como numérica
                     }
                 ],
-                /*
+                
                 
                 "drawCallback": function() {
+
+                    /*
                     // Re-inicializa los tooltips de las celdas
                     $('.tooltip-cell').each(function() {
                         var tooltip = $(this).find('.tooltip-text');
@@ -228,7 +230,7 @@ $(document).ready(function() {
                             tooltip.css('visibility', 'hidden').css('opacity', '0');
                         });
                     });
-
+*/
 
                     // Re-inicializa los tooltips de los encabezados
                     $('.tooltip-header').each(function() {
@@ -259,7 +261,7 @@ $(document).ready(function() {
                     
 
                 },
-*/
+
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ entradas",
                     "zeroRecords": "No se encontraron resultados",
