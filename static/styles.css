@@ -38,7 +38,7 @@ tr {
 th,
 td {
     border: 1px solid #000;
-    padding: 2px; /* Espaciado interior */
+    padding: 0px; /* Espaciado interior */
     text-align: left;
     font-family: Arial, sans-serif;
     /*font-size: 14px; /* Ajusta el tamaño de la letra aquí */
@@ -257,7 +257,7 @@ input[type="checkbox"]:checked+#expandableDiv {
 
 /* Separación entre el banner y el contenido */
 .page-content {
-    margin-top: 2px;    /* Espacio entre el banner y el contenido */
+    margin-top: 0px;    /* Espacio entre el banner y el contenido */
     overflow: visible;
     /*padding: 20px;*/
     /*background-color: #f4f4f4;*/
@@ -276,7 +276,7 @@ input[type="checkbox"]:checked+#expandableDiv {
 
 table.dataTable tbody th,
 table.dataTable tbody td {
-    padding: 4px 4px;
+    padding: 2px 2px;
     border-collapse: collapse;
 }
 
@@ -467,3 +467,13 @@ table.dataTable tbody td {
 }
 
 /********************************************************/
+
+
+/* Estilo para resaltar las filas filtradas */
+.filtered-row {
+    background-color: rgba(255, 255, 0, 0.3); /* Amarillo claro y transparente */
+}
+
+/********************************************************/    
+
+

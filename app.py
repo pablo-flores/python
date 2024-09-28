@@ -107,6 +107,11 @@ def get_alarmas():
         if alarma.get('alarmState') in ['UPDATED', 'RETRY']:
             alarma['alarmState'] = 'RAISED'                   
 
+        if alarma.get('sourceSystemId') in ['ICD']:
+           alarma['alarmId'] = 'MAN ' + alarma.get('alarmId')
+        else:   
+           alarma['alarmId'] = alarma.get('sourceSystemId') + ' ' + alarma.get('alarmId')
+
         alarmas.append(alarma)
 
     logger.info(f"Se encontraron {len(alarmas)} alarmas.")
