@@ -28,12 +28,25 @@ table {
     border-collapse: collapse;
     width: 100%;
     table-layout: auto; /* Las columnas se ajustan según el contenido */
+    /*table-layout: fixed; /* Forces fixed column widths */
 }
 
 tr {
     pointer-events: auto;
 }
 
+/* Reduce the padding inside each cell */
+#alarmTable th, #alarmTable td {
+    padding: 7px; /* Adjust padding to reduce the row height */
+    overflow: hidden; /* Hide overflow to prevent text from spilling out */
+    text-overflow: ellipsis; /* Adds ellipsis (...) if text is too long */
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+}
+/* Add padding to header cells to provide space for the sorting icon */
+#alarmTable th {
+    padding-right: 15px; /* Adjust the padding to add space for the sorting icon */
+    position: relative; /* Allows absolute positioning of the sorting icon */
+}
 
 th,
 td {
