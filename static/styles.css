@@ -496,3 +496,35 @@ table.dataTable tbody td {
 .small-textExpandableDiv {
     font-size: 0.9vw;
 }
+
+
+/***********************************************************/
+
+/* Reducir el tamaño de los selectores de cantidad de entradas */
+.dataTables_wrapper .dataTables_length select {
+    font-size: 0.7rem; /* Ajusta según tus necesidades */
+    padding: 1px; /* Reduce el padding para ajustar el tamaño */
+    height: auto;
+}
+
+/* Reducir el tamaño de la caja de búsqueda */
+.dataTables_wrapper .dataTables_filter input {
+    font-size: 0.7rem; /* Ajusta según tus necesidades */
+    padding: 1px; /* Reduce el padding */
+    height: auto;
+}
+
+/* Reducir el tamaño del texto de la información de la tabla */
+.dataTables_wrapper .dataTables_info {
+    font-size: 0.7rem; /* Ajusta según tus necesidades */
+}
+
+/* Reducir el tamaño de los botones de paginación */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    font-size: 0.7rem; /* Ajusta según tus necesidades */
+    padding: 1px 3px; /* Ajusta padding para reducir tamaño */
+    margin: 0 1px;
+    height: auto;
+}
+
+/***********************************************************/
