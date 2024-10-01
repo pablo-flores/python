@@ -113,15 +113,30 @@ def get_alarmas():
 #            logger.info('todo '+ alarma.get('alarmState'))
 
 
+#        alarm_id = alarma.get('alarmId') or ''
+#        origen_id = alarma.get('origenId') or ''
+#
+#        # Check if alarm_id is a substring of origen_id or vice versa
+#        if alarm_id in origen_id or origen_id in alarm_id:
+#            alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
+#        else:
+#            alarma['origenId'] = 'ICD ' + origen_id
+            
+
         alarm_id = alarma.get('alarmId') or ''
         origen_id = alarma.get('origenId') or ''
 
         # Check if alarm_id is a substring of origen_id or vice versa
         if alarm_id in origen_id or origen_id in alarm_id:
-            alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
+            # Check the length of alarm_id to determine the prefix
+            if len(alarm_id) == 24:
+                alarma['origenId'] = 'FMS ' + origen_id
+            elif len(alarm_id) == 10 or len(alarm_id) == 13:
+                alarma['origenId'] = 'FMC ' + origen_id
+            else:
+                alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
         else:
             alarma['origenId'] = 'ICD ' + origen_id
-
 
 
 
