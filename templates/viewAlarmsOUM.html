@@ -3,6 +3,7 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
+        <meta name="author" content="pabflores@teco.com.ar">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Alarmas del Outage Manager</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -86,7 +87,7 @@
                         <tr>
                             <td>{{ alarma.alarmId }}</td>
                             <td>{{ alarma.origenId }}</td>                                        
-                            <td>{{ alarma.alarmState }}</td>                    
+                            <td>{{ alarma.alarmState }}</td>                           
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
                             <td>{{ alarma.alarmType }}</td>

@@ -146,14 +146,21 @@ $(document).ready(function() {
         url: '/get_alarmas',
         method: 'GET',
         success: function(response) {
+
             let tableBody = '';
             response.alarmas.forEach(function(alarma) {
                 // Reemplazar "UPDATED" o "RETRY" por "RAISED" en alarma.alarmState
-                // let alarmState = alarma.alarmState;
+                //let alarmState = alarma.alarmState;
+                let alarmState = alarma.alarmState.trim();
+
+                if (alarmState === 'UPDATED' || alarmState === 'RETRY') {
+                    alarmState = 'RAISED';
+                } 
+
                 tableBody += `
                 <tr>
                     <td class="tooltip-cell">
-                        ${alarma.alarmId}
+                        ${alarma.alarmId || ''}
                         <span class="tooltip-text">                           
                             <div class="tooltip-row">
                                 <span class="tooltip-title">Sistema Origen:</span>
@@ -178,10 +185,10 @@ $(document).ready(function() {
                         </span>
                     </td>
 
-                    <td>${alarma.origenId}</td>
-                    <td>${alarma.alarmState}</td>
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmRaisedTime}</td> <!-- Centrar contenido del TD -->                            
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmClearedTime}</td> <!-- Centrar contenido del TD -->
+                    <td>${alarma.origenId || ''}</td>
+                    <td>${alarmState || ''}</td> <!-- Use modified alarmState here -->                   
+                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmRaisedTime || ''}</td> <!-- Centrar contenido del TD -->                            
+                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmClearedTime || ''}</td> <!-- Centrar contenido del TD -->
                     <td>${alarma.alarmType}</td>
                     <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->
                     <td>${alarma.TypeNetworkElement}</td>
@@ -191,6 +198,9 @@ $(document).ready(function() {
                 </tr>`;
             });
             $('#alarmTable tbody').html(tableBody);
+
+            //console.log('Estado:', alarmState);
+
 
             // Inicializar DataTable
             $('#alarmTable').DataTable({
@@ -204,23 +214,19 @@ $(document).ready(function() {
                 "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
                 "columnDefs": [
                     {
-                        "targets": 2, // Índice de la columna 'estado'
-                        "type": "string" // Definir la columna como tipo string
-                    },
-                    {
                         "targets": 9, // Índice de la columna 'Clients'
                         "type": "num" // Definir la columna como numérica
                     },
                     { 
                         "targets": 10, // Índice de la columna 'Time Resolution'
                         "type": "num" // Definir la columna como numérica
-                    }
+                    },
+                    { targets: 2, searchable: true } // Habilitar búsqueda en la columna de estado
                 ],
-                
                 
                 "drawCallback": function() {
 
-                    /*
+                 
                     // Re-inicializa los tooltips de las celdas
                     $('.tooltip-cell').each(function() {
                         var tooltip = $(this).find('.tooltip-text');
@@ -230,8 +236,8 @@ $(document).ready(function() {
                             tooltip.css('visibility', 'hidden').css('opacity', '0');
                         });
                     });
-*/
 
+/*
                     // Re-inicializa los tooltips de los encabezados
                     $('.tooltip-header').each(function() {
                         var tooltip = $(this).find('.tooltip-text');
@@ -258,7 +264,7 @@ $(document).ready(function() {
                             tooltip.css('left', '50%').css('right', 'auto').css('transform', 'translateX(-50%)');
                         });
                     });
-                    
+                    */
 
                 },
 
@@ -286,7 +292,8 @@ $(document).ready(function() {
 
             $('#loading').hide();
             $('#alarmTable').show();
-            
+
+  
         },
         error: function() {
             alert('Error al cargar los datos');
@@ -382,4 +389,8 @@ $(document).ready(function() {
     });
 });
 
+/*******************************************************************************/
+
+/*******************************************************************************/
+/*******************************************************************************/
 /*******************************************************************************/

@@ -104,11 +104,29 @@ def get_alarmas():
         if not alarma.get('timeResolution'):
             alarma['timeResolution'] = '-'     
 
-        if alarma.get('alarmState') in ['UPDATED', 'RETRY']:
-            alarma['alarmState'] = 'RAISED'                   
+#        if alarma.get('alarmState') in ["UPDATED", "RETRY"]:
+#            logger.info('es   '+alarma.get('alarmState'))
+#            alarma['alarmState'] = "RAISED"
+#            logger.info('hacer '+alarma.get('alarmState'))
+#        else:
+#            #alarma['alarmState'] = alarma.get('alarmState')
+#            logger.info('todo '+ alarma.get('alarmState'))
+
+
+        alarm_id = alarma.get('alarmId') or ''
+        origen_id = alarma.get('origenId') or ''
+
+        # Check if alarm_id is a substring of origen_id or vice versa
+        if alarm_id in origen_id or origen_id in alarm_id:
+            alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
+        else:
+            alarma['origenId'] = 'ICD ' + origen_id
+
+
+
 
         if alarma.get('sourceSystemId') in ['ICD']:
-           alarma['alarmId'] = 'MAN ' + alarma.get('alarmId')
+           alarma['alarmId'] = 'ICD ' + alarma.get('alarmId')
         else:   
            alarma['alarmId'] = alarma.get('sourceSystemId') + ' ' + alarma.get('alarmId')
 

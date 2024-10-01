@@ -26,7 +26,8 @@ h4 {
 /* Estilos para la tabla */
 table {
     border-collapse: collapse;
-    width: 100%;
+/*    width: 100%;*/
+    max-width:100%;
     table-layout: auto; /* Las columnas se ajustan según el contenido */
     /*table-layout: fixed; /* Forces fixed column widths */
 }
@@ -38,7 +39,7 @@ tr {
 /* Reduce the padding inside each cell */
 #alarmTable th, #alarmTable td {
     padding: 7px; /* Adjust padding to reduce the row height */
-    overflow: hidden; /* Hide overflow to prevent text from spilling out */
+    /*overflow: hidden; /* Hide overflow to prevent text from spilling out */
     text-overflow: ellipsis; /* Adds ellipsis (...) if text is too long */
     white-space: nowrap; /* Prevents text from wrapping to the next line */
 }
@@ -112,6 +113,7 @@ body, html {
     color: rgb(255, 255, 255);
     padding: 4px 0;
     width: 100%;
+    /*max-width:100%;*/
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;
@@ -298,7 +300,6 @@ table.dataTable tbody td {
 /* Contenedor del tooltip */
 .tooltip-cell {
     position: relative;
-    
     cursor: pointer;
 }
 
@@ -320,15 +321,29 @@ table.dataTable tbody td {
     white-space: nowrap;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.9);
     font-size: 12px; /* Tamaño de letra más pequeño */
-    left: 30%; /* Mover el tooltip más hacia la derecha */
+    left: 30%; /* Mover el tooltip más hacia la ... */
     transform: translateX(0%); /* Ajustar la posición horizontal */    
     border: 1px solid #d32222; /* Borde opcional para mayor definición */ 
 }
 
+
+/* Flecha del tooltip (Eliminar o comentar para quitarla) */
+.tooltip-text:after {
+    content: "";
+    position: absolute;
+    top: 100%; 
+    left: 30%;
+    margin-left: -5px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+
 /* Mostrar el tooltip al pasar el ratón */
 .tooltip-cell:hover .tooltip-text {
     visibility: visible;
-    opacity: 1;
+    opacity: 1;    
 }
 
 /* Estructura del contenido del tooltip */
@@ -388,19 +403,6 @@ table.dataTable tbody td {
 }
 
 
-/* Flecha del tooltip (Eliminar o comentar para quitarla) */
-.tooltip-header .tooltip-text:after {
-    content: "";
-    position: absolute;
-    top: 100%; 
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #333 transparent transparent transparent;
-}
-
-
 /* Mostrar el tooltip al pasar el ratón */
 .tooltip-header:hover .tooltip-text {
     visibility: visible;
@@ -432,8 +434,10 @@ table.dataTable tbody td {
     z-index: 9999; /* Sobre otros elementos */
     left: 0;
     top: 0;
-    width: 100%; /* Ancho total */
-    height: 100%; /* Altura total */
+    /*width: 100%; /* Ancho total */
+    max-width:100%;
+    /*height: 100%; /* Altura total */
+    height:auto;
     background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
 }
 
@@ -527,4 +531,9 @@ table.dataTable tbody td {
     height: auto;
 }
 
+/***********************************************************/
+
+
+/***********************************************************/
+/***********************************************************/
 /***********************************************************/
