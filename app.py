@@ -135,13 +135,13 @@ def get_alarmas():
             alarma['origenId'] = 'ICD ' + origen_id
 
 
-        if alarma.get('sourceSystemId') in ['ICD']:
-           alarma['alarmId'] = 'ICD ' + alarma.get('alarmId')
-        else:   
-            if len(alarm_id) == 24:
-                alarma['alarmId'] = 'FMS ' + alarm_id
-            elif len(alarm_id) == 10 or len(alarm_id) == 13:
-                alarma['alarmId'] = 'FMC ' + alarm_id
+            
+        if len(alarm_id) == 24:
+            alarma['alarmId'] = 'FMS ' + alarm_id
+        elif len(alarm_id) == 10 or len(alarm_id) == 13:
+            alarma['alarmId'] = 'FMC ' + alarm_id
+        else:
+            alarma['alarmId'] = 'ICD ' + alarm_id                
 
         alarmas.append(alarma)
 
