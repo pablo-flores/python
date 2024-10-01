@@ -126,17 +126,14 @@ def get_alarmas():
         alarm_id = alarma.get('alarmId') or ''
         origen_id = alarma.get('origenId') or ''
 
-        # Check if alarm_id is a substring of origen_id or vice versa
-        if alarm_id in origen_id or origen_id in alarm_id:
-            # Check the length of alarm_id to determine the prefix
-            if len(origen_id) == 24:
-                alarma['origenId'] = 'FMS ' + origen_id
-            elif len(origen_id) == 10 or len(origen_id) == 13:
-                alarma['origenId'] = 'FMC ' + origen_id
-            else:
-                alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
+
+        if len(origen_id) == 24:
+            alarma['origenId'] = 'FMS ' + origen_id
+        elif len(origen_id) == 10 or len(origen_id) == 13:
+            alarma['origenId'] = 'FMC ' + origen_id
         else:
             alarma['origenId'] = 'ICD ' + origen_id
+
 
 
 
