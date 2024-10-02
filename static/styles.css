@@ -547,7 +547,7 @@ table.dataTable tbody td {
 /* Estilos para el contenedor de la barra de progreso */
 #progress-container {
     width: 90%; /* Ancho de la barra */
-    height: 5px; /* Alto de la barra */
+    height: 3px; /* Alto de la barra */
     background-color: #5290d3; /* Mismo color que la barra del fondo */
     /*border-radius: 5px; /* Bordes redondeados */
     overflow: hidden;
