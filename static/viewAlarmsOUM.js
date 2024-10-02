@@ -152,9 +152,14 @@ $(document).ready(function() {
                 // Reemplazar "UPDATED" o "RETRY" por "RAISED" en alarma.alarmState
                 //let alarmState = alarma.alarmState;
                 let alarmState = alarma.alarmState.trim();
+                let alarmClearedTime = alarma.alarmClearedTime;
 
                 if (alarmState === 'UPDATED' || alarmState === 'RETRY') {
                     alarmState = 'RAISED';
+                } 
+
+                if (alarmClearedTime !== '-' ) {
+                    alarmState = 'CLEARED';
                 } 
 
                 tableBody += `
@@ -212,7 +217,7 @@ $(document).ready(function() {
                 "order": [],  // No aplica un ordenamiento inicial, toma los datos tal como llegan
                 "pageLength": 15,  // Cambia la cantidad de registros mostrados a 15
                 "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
-                "columnDefs": [                                                      
+                "columnDefs": [                                                                    
                     {
                         "targets": 9, // Índice de la columna 'Clients'
                         "type": "num" // Definir la columna como numérica
@@ -223,7 +228,8 @@ $(document).ready(function() {
                     },
                     { targets: 2, searchable: true } // Habilitar búsqueda en la columna de estado
                 ],
-                
+               
+
                 "drawCallback": function() {
 
                  

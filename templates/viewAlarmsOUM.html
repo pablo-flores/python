@@ -9,10 +9,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
         <!-- Archivos CSS locales -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/jquery.dataTables.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/dataTables.min.css') }}">
         <!-- Archivos JavaScript locales -->
         <script src="{{ url_for('static', filename='vendor/js/jquery-3.6.0.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='vendor/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/js/dataTables.min.js') }}"></script>
+
         <script defer src="{{ url_for('static', filename='viewAlarmsOUM.js') }}"></script>
     </head>
 
@@ -145,7 +146,8 @@
 
         <!-- Include necessary JS libraries locally -->
         <script src="{{ url_for('static', filename='vendor/js/jquery-3.6.0.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='vendor/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/js/dataTables.min.js') }}"></script>        
+        
         <script src="{{ url_for('static', filename='vendor/js/xlsx.full.min.js') }}"></script>
 
 
