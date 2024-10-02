@@ -241,35 +241,6 @@ $(document).ready(function() {
                         });
                     });
 
-/*
-                    // Re-inicializa los tooltips de los encabezados
-                    $('.tooltip-header').each(function() {
-                        var tooltip = $(this).find('.tooltip-text');
-                        $(this).hover(function() {
-                            tooltip.css('visibility', 'visible').css('opacity', '1');
-                            
-                            // Obtener la posición del tooltip
-                            var tooltipRect = tooltip[0].getBoundingClientRect();
-                            var windowWidth = $(window).width();
-
-                            // Ajustar posición si el tooltip se sale de la pantalla por la derecha
-                            if (tooltipRect.right > windowWidth) {
-                                tooltip.css('left', 'auto').css('right', '0').css('transform', 'translateX(-5%)');
-                            }
-
-                            // Ajustar posición si el tooltip se sale de la pantalla por la izquierda
-                            if (tooltipRect.left < 0) {
-                                tooltip.css('left', '0').css('right', 'auto').css('transform', 'translateX(5%)');
-                            }
-
-                        }, function() {
-                            tooltip.css('visibility', 'hidden').css('opacity', '0');
-                            // Restaurar el estado original del tooltip
-                            tooltip.css('left', '50%').css('right', 'auto').css('transform', 'translateX(-50%)');
-                        });
-                    });
-                    */
-
                 },
 
                 "language": {
