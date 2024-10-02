@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, render_template, Response, jsonify
+from flask import Flask, render_template, Response, jsonify, request
 from datetime import datetime, timedelta
 from flask_pymongo import PyMongo
 from pytz import timezone, utc
@@ -37,15 +37,20 @@ mongo = PyMongo(app)
 buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
 #days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
 
+
 # Ruta principal que carga la página
 @app.route('/')
 def index():
-    logger.info("Cargando la página viewAlarmsOUM.")
+    client_ip = request.remote_addr
+    logger.info(f"Client IP: {client_ip} - Accessing viewAlarmsOUM.")
     return render_template('viewAlarmsOUM.html', days_configMap=days_configMap)
 
 # Nueva ruta para obtener las alarmas en formato JSON
 @app.route('/get_alarmas', methods=['GET'])
 def get_alarmas():
+    client_ip = request.remote_addr
+    logger.info(f"Client IP: {client_ip} - Accessing /get_alarmas.")
+
     days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
     logger.info(f"Consultando alarmas desde {days_ago}.")
 
