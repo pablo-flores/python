@@ -3,7 +3,26 @@ FROM registry.access.redhat.com/ubi9/ubi:latest
 
 # Actualizar paquetes e instalar dependencias necesarias
 RUN dnf update -y && \
-    dnf install -y gcc openssl-devel bzip2-devel libffi-devel make wget tar && \
+    dnf install -y \
+        gcc \
+        openssl-devel \
+        bzip2-devel \
+        libffi-devel \
+        zlib-devel \
+        make \
+        wget \
+        tar \
+        xz-devel \
+        sqlite-devel \
+        tk-devel \
+        gdbm-devel \
+        libuuid-devel \
+        libnsl2-devel \
+        readline-devel \
+        bzip2-devel \
+        expat-devel \
+        ncurses-devel \
+        && \
     dnf clean all
 
 # Descargar e instalar Python 3.12.7
