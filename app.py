@@ -134,7 +134,7 @@ def get_alarmas():
         elif len(origen_id) == 10 or len(origen_id) == 13:
             alarma['origenId'] = 'FMC ' + origen_id
         else:
-            alarma['origenId'] = sourceSystem_id + origen_id
+            alarma['origenId'] = sourceSystem_id + ' ' + origen_id
 
 
             
@@ -143,7 +143,7 @@ def get_alarmas():
         elif len(alarm_id) == 10 or len(alarm_id) == 13:
             alarma['alarmId'] = 'FMC ' + alarm_id
         else:
-            alarma['alarmId'] = sourceSystem_id + alarm_id                
+            alarma['alarmId'] = sourceSystem_id + ' ' + alarm_id                
 
 
 
