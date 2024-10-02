@@ -133,6 +133,7 @@ def get_alarmas():
         alarm_id = alarma.get('alarmId') or ''
         origen_id = alarma.get('origenId') or ''
         sourceSystem_id = alarma.get('sourceSystemId') or ''
+        timeResolution = alarma.get('timeResolution') or ''
 
         if len(origen_id) == 24:
             alarma['origenId'] = 'FMS ' + origen_id
@@ -150,6 +151,17 @@ def get_alarmas():
         else:
             alarma['alarmId'] = sourceSystem_id + ' ' + alarm_id                
 
+
+        alarma['timeResolution'] = str(timeResolution) + 'hs'
+
+
+        if alarma.get('inicioOUM') and alarma.get('alarmRaisedTime'):
+            inicio_outage = datetime.strptime(alarma['inicioOUM'], '%m-%d %H:%M:%S')
+            inicio_alarma = datetime.strptime(alarma['alarmRaisedTime'], '%m-%d %H:%M:%S')
+            time_difference = (inicio_outage - inicio_alarma).total_seconds() / 60  # Difference in minutes
+            alarma['timeDifference'] = round(time_difference, 0)  # Round to 0 decimal places
+        else:
+            alarma['timeDifference'] = '-'
 
 
         alarmas.append(alarma)

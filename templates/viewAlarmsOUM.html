@@ -33,7 +33,8 @@
                 Service Impact Analysis
                 <!-- Botón de expansión/contracción -->
                 <button id="toggleButton" class="toggle-btn">Click para Explicación de columnas</button>   
-                <div style='color: yellow; font-size: 0.8vw; font-weight: bold; text-align: center;'>Version de prueba</div>             
+                <div style='display: none;'>Version 0.1 - EN PRUEBAS</div>
+                <div style='color: red; font-size: 0.8vw; font-weight: bold; text-align: right;'>Version 0.1 - EN PRUEBAS</div>   
                 <div class="refresh-container">
                     <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Refresh - Foto: <span id="local-time"></span></a>        
                     <div id="progress-container">
@@ -68,6 +69,9 @@
                 
                 <div class="grid-itemRight">T.Inicio Outage:</div>
                 <div class="grid-item">Fecha y hora que llegó la afectación al Outage Manager.</div>
+
+                <div class="grid-itemRight">Dif.Min.:</div>
+                <div class="grid-item">Diferencia minutos entre T.Inicio Outage y T.Inicio Alarma.</div>                
                 
                 <div class="grid-itemRight">Tipo Elemento Red:</div>
                 <div class="grid-item">Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto de recursos asociados a un nombre, para facilitar su gestión).</div>
@@ -97,10 +101,11 @@
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Primer Id Outage<span class="tooltip-text">Id del Outage (o Alarma), obtenido del primero en llegar al O. Manager (TT o FMx).</span></th>
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Otros Id<span class="tooltip-text">Id de la ticketera o de Fault.</span></th>                    
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Estado<span class="tooltip-text">Estado actual del outage.</span></th>                                                            
+                        <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Tipo de Alarma<span class="tooltip-text">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA...).</span></th>                                            
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">T.Inicio Alarma<span class="tooltip-text">Fecha y hora de 1er evento de Alarma (Fault) o creación manual.</span></th>                                        
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">T.Fin Alarma<span class="tooltip-text">Fecha y hora que Fault desafecto la alarma, muestra los últimos 4 días.</span></th>                                                                                
-                        <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Tipo de Alarma<span class="tooltip-text">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA...).</span></th>                    
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">T.Inicio Outage<span class="tooltip-text">Fecha y hora que llego la afectacion al Outage Manager.</span></th>                                        
+                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Dif.Min.<span class="tooltip-text">Diferencia minutos entre T.Inicio Outage y T.Inicio Alarma.</span></th>                                                                
                         <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Tipo Elemento Red<span class="tooltip-text">Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto recursos asociados a un nombre, para facilitar su gestión).</span></th>                    
                         <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Id Elemento Red<span class="tooltip-text">Nombre elemento de red donde aplico el outage.</span></th>                                        
                         <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">#Clientes<span class="tooltip-text">Cantidad de clientes afectados (clientes únicos).</span></th>                    
@@ -115,10 +120,11 @@
                             <td data-tooltip="Este es el contenido del tooltip">{{ alarma.alarmId }}</td>
                             <td>{{ alarma.origenId }}</td>                                        
                             <td>{{ alarma.alarmState }}</td>                           
+                            <td>{{ alarma.alarmType }}</td>                            
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
-                            <td>{{ alarma.alarmType }}</td>
-                            <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->                                                  
+                            <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->   
+                            <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.timeDifference }}</td> <!-- Centrar contenido del TD -->                               
                             <td>{{ alarma.TypeNetworkElement }}</td>                
                             <td>{{ alarma.networkElementId }}</td>
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.clients }}</td> <!-- Centrar contenido del TD -->                                                                      

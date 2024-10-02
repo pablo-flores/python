@@ -573,6 +573,7 @@ table.dataTable tbody td {
     margin-right: 5%; /* Margen derecho para alejar del borde */
     direction: rtl; /* Invertir la dirección del llenado */
     margin-top: 3px; /* Añade un margen superior del botón de Refresh */
+    border: 1px solid #681fff;
 }
 
 /* Estilo del botón cuando se activa el progress */
@@ -599,10 +600,10 @@ table.dataTable tbody td {
 /*        #f5d380,  /* Amarillo dorado oscuro */
 /*        #fcc563,  /* Naranja amarillo */
 
-        #ffad46,  /* Naranja */     
-        #ff912a,  /* Naranja rojizo */
-        #ff7410,  /* Rojo anaranjado */
-        #f25500  /* Rojo brillante */
+        #f25500,  /* Rojo brillante */
+        #ff7410,  /* Rojo anaranjado */  
+        #ff912a,  /* Naranja rojizo */ 
+                          
 /*
         #d93500,  /* Rojo oscuro */
  /*       #bf1700,  /* Rojo oscuro intenso */
