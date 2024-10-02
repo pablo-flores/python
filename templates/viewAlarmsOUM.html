@@ -111,7 +111,7 @@
                     {% for alarma in alarmas %}
                     
                         <tr>
-                            <td>{{ alarma.alarmId }}</td>
+                            <td data-tooltip="Este es el contenido del tooltip">{{ alarma.alarmId }}</td>
                             <td>{{ alarma.origenId }}</td>                                        
                             <td>{{ alarma.alarmState }}</td>                           
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
