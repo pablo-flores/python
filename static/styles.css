@@ -187,7 +187,7 @@ body, html {
 }
 
 .btn-modern:hover {
-    background-color: #0056b3;    /* Color de fondo más oscuro al pasar el mouse */
+    background-color: #0056b3 !important;    /* Color de fondo más oscuro al pasar el mouse */
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);    /* Sombra más fuerte al pasar el mouse */
 }
 
@@ -547,13 +547,19 @@ table.dataTable tbody td {
 /* Estilos para el contenedor de la barra de progreso */
 #progress-container {
     width: 90%; /* Ancho de la barra */
-    height: 7px; /* Alto de la barra */
+    height: 5px; /* Alto de la barra */
     background-color: #5290d3; /* Mismo color que la barra del fondo */
     border-radius: 5px; /* Bordes redondeados */
     overflow: hidden;
     position: relative; /* Para alinear correctamente el progreso */
     margin-right: 5%; /* Margen derecho para alejar del borde */
     direction: rtl; /* Invertir la dirección del llenado */
+    margin-top: 2px; /* Añade un margen superior del botón de Refresh */
+}
+
+/* Estilo del botón cuando se activa el progress */
+#progress-container.active + .btn-modern {
+    background-color: #5290d3; /* Mantener el color inicial */
 }
 
 /* Barra de progreso real */
