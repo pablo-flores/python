@@ -542,6 +542,24 @@ table.dataTable tbody td {
     height: auto;
 }
 
+/* Ajustar márgenes del cuadro de búsqueda */
+.dataTables_filter {
+    margin: 3px;
+}
+
+.dataTables_info {
+    margin: 3px;
+}
+
+.dataTables_length {
+    margin: 3px;
+}
+
+.dataTables_paginate {
+    margin: 3px;
+}
+
+
 /***********************************************************/
 
 /* Estilos para el contenedor de la barra de progreso */
