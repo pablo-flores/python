@@ -121,7 +121,9 @@ def get_alarmas():
 #            alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
 #        else:
 #            alarma['origenId'] = 'ICD ' + origen_id
-            
+
+
+        # infiere el origen por la numeracion
 
         alarm_id = alarma.get('alarmId') or ''
         origen_id = alarma.get('origenId') or ''
@@ -142,6 +144,8 @@ def get_alarmas():
             alarma['alarmId'] = 'FMC ' + alarm_id
         else:
             alarma['alarmId'] = 'ICD ' + alarm_id                
+
+
 
         alarmas.append(alarma)
 

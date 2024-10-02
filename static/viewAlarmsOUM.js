@@ -212,7 +212,7 @@ $(document).ready(function() {
                 "order": [],  // No aplica un ordenamiento inicial, toma los datos tal como llegan
                 "pageLength": 15,  // Cambia la cantidad de registros mostrados a 15
                 "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
-                "columnDefs": [
+                "columnDefs": [                                                      
                     {
                         "targets": 9, // Índice de la columna 'Clients'
                         "type": "num" // Definir la columna como numérica
@@ -390,7 +390,199 @@ $(document).ready(function() {
 });
 
 /*******************************************************************************/
+/*
+// Función para actualizar el tiempo local con la zona horaria de Buenos Aires
+document.addEventListener('DOMContentLoaded', function () {
+    // Set the initial local time
+    updateLocalTime();
+
+    // Update the progress bar every 5 seconds
+    setInterval(updateProgressBar, 5000);
+});
+
+// Function to update the local time
+function updateLocalTime() {
+    const now = new Date();
+    const options = {
+        timeZone: 'America/Argentina/Buenos_Aires', // Set to the correct timezone
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    };
+    const formattedTime = new Intl.DateTimeFormat('es-AR', options).format(now);
+    document.getElementById('local-time').textContent = formattedTime;
+    console.log('Local time updated:', formattedTime);
+}
+
+// Function to update the progress bar
+function updateProgressBar() {
+    const now = new Date();
+    const localTimeElement = document.getElementById('local-time').textContent;
+
+    console.log('Current time:', now);
+    console.log('Local time element:', localTimeElement);
+    
+    // Remove the comma and split the date and time parts
+    const [datePart, timePart] = localTimeElement.replace(',', '').split(' ');
+    const [day, month, year] = datePart.split('/');
+    const [hours, minutes, seconds] = timePart.split(':');
+
+    console.log('Parsed date:', year, month, day);
+    console.log('Parsed time:', hours, minutes, seconds);
+
+    // Create a new date object with the parsed values
+    const lastUpdate = new Date(`${year}-${month}-${day}T${hours}:${minutes}:${seconds}-03:00`); // Adjust to the correct timezone
+    console.log('Last update time:', lastUpdate);
+
+    if (isNaN(lastUpdate.getTime())) {
+        console.error('Error: Invalid date parsed.');
+        return; // Exit the function to avoid further errors
+    }
+
+    const elapsed = now - lastUpdate; // Time difference in milliseconds
+    console.log('Elapsed time (ms):', elapsed);
+
+    // Calculate the percentage (10 minutes = 600,000 ms)
+    // Calculate the percentage (5 minutes = 300,000 ms)
+    const percentage = Math.min((elapsed / 300000) * 100, 100); // Cap at 100%
+    console.log('Progress percentage:', percentage);
+
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = percentage + '%';
+
+    // Change the color based on the elapsed time
+    if (percentage < 20) {
+        progressBar.style.backgroundColor = 'lightgreen';
+        console.log('Progress bar color: green');
+    } else if (percentage < 40) {
+        progressBar.style.backgroundColor = 'green';
+        console.log('Progress bar color: yellow');
+    } else if (percentage < 60) {
+        progressBar.style.backgroundColor = 'lightyellow';
+        console.log('Progress bar color: yellow');
+    } else if (percentage < 80) {
+        progressBar.style.backgroundColor = 'lightorange';
+        console.log('Progress bar color: yellow');
+    } else if (percentage < 90) {
+        progressBar.style.backgroundColor = 'orange';
+        console.log('Progress bar color: yellow');                        
+    } else {
+        progressBar.style.backgroundColor = 'red';
+        console.log('Progress bar color: red');
+    }
+
+
+
+}
+*/
 
 /*******************************************************************************/
+document.addEventListener('DOMContentLoaded', function () {
+    // Set the initial local time
+    updateLocalTime();
+
+    // Update the progress bar every 5 seconds
+    setInterval(updateProgressBar, 10000);
+});
+
+// Function to update the local time
+function updateLocalTime() {
+    const now = new Date();
+    const options = {
+        timeZone: 'America/Argentina/Buenos_Aires',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    };
+    const formattedTime = new Intl.DateTimeFormat('es-AR', options).format(now);
+    document.getElementById('local-time').textContent = formattedTime;
+    console.log('Local time updated:', formattedTime);
+}
+
+
+// Function to update the progress bar
+function updateProgressBar() {
+    const now = new Date();
+    const localTimeElement = document.getElementById('local-time').textContent;
+
+    console.log('Current time:', now);
+    console.log('Local time element:', localTimeElement);
+
+    // Remove the comma and split the date and time parts
+    const [datePart, timePart] = localTimeElement.replace(',', '').split(' ');
+    const [day, month, year] = datePart.split('/');
+    const [hours, minutes, seconds] = timePart.split(':');
+
+    console.log('Parsed date:', year, month, day);
+    console.log('Parsed time:', hours, minutes, seconds);
+
+    // Create a new date object with the parsed values
+    const lastUpdate = new Date(`${year}-${month}-${day}T${hours}:${minutes}:${seconds}-03:00`);
+    console.log('Last update time:', lastUpdate);
+
+    if (isNaN(lastUpdate.getTime())) {
+        console.error('Error: Invalid date parsed.');
+        return; // Exit the function to avoid further errors
+    }
+
+    const elapsed = now - lastUpdate; // Time difference in milliseconds
+    console.log('Elapsed time (ms):', elapsed);
+
+    // Calculate the percentage (10 minutes = 600,000 ms)
+    const percentage = Math.min((elapsed / 600000) * 100, 100); // Cap at 100%
+    console.log('Progress percentage:', percentage);
+
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = percentage + '%';
+
+    // Check if the progress is full and change the button color
+    const refreshButton = document.querySelector('.btn-modern');
+    if (percentage >= 100) {
+        refreshButton.style.backgroundColor = '#fe8d59';//'red'; // Change the button color to red
+        document.getElementById('progress-container').style.display = 'none'; // Hide the progress bar
+    } else {
+        refreshButton.style.backgroundColor = '#5290d3'; // Reset to the original color
+        document.getElementById('progress-container').style.display = 'block'; // Make sure the progress bar is visible
+    }
+}
+
+
+document.querySelector('.btn-modern').addEventListener('click', function() {
+    // Mostrar el contenedor de progreso
+    document.getElementById('progress-container').style.display = 'block';
+
+    // Reiniciar el ancho de la barra de progreso
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = '0%';
+
+    // Restablecer el color del botón de "Refresh"
+    this.style.backgroundColor = '#5290d3';
+
+    // Actualizar la hora local
+    updateLocalTime();
+});
+
+
 /*******************************************************************************/
+
+document.getElementById('toggleButton').addEventListener('click', function() {
+    var expandableDiv = document.getElementById('expandableDiv');
+    
+    // Verifica si el contenido es visible
+    if (expandableDiv.style.display === 'none' || expandableDiv.style.display === '') {
+        expandableDiv.style.display = 'block'; // Mostrar el contenido
+    } else {
+        expandableDiv.style.display = 'none'; // Ocultar el contenido
+    }
+});
+
+
 /*******************************************************************************/

@@ -30,32 +30,57 @@
             <div class="service-impact-analysis">
                 <img src="{{ url_for('static', filename='telecom.gif') }}" alt="Telecom Logo" class="logo">
                 Service Impact Analysis
+                <!-- Botón de expansión/contracción -->
+                <button id="toggleButton" class="toggle-btn">Click para Explicación de columnas</button>                
                 <div class="refresh-container">
                     <a href="javascript:(window.location.href = window.location.href)" class="btn-modern">Refresh - Foto: <span id="local-time"></span></a>        
+                    <div id="progress-container">
+                        <div id="progress-bar"></div>
+                    </div>
                 </div>
             </div>
         </nav>
         
-        <div style="position: relative; top: -12px;">
-            <label id="toggleClick" for="toggle" class="small-text">Click para Explicación de columnas</label>
-            <input type="checkbox" id="toggle">
-            <div id="expandableDiv" class="small-textExpandableDiv">
-                <p>
-                    <strong>Primer Id Outage:</strong> Id del Outage (o Alarma), obtenido del primero en llegar al Outage Manager (TT o FMx).<br>
-                    <strong>Otros Id:</strong> Id de la ticketera o de Fault.<br>            
-                    <strong>Estado:</strong> Estado actual del outage.<br>
-                    <strong>T.Inicio Alarma:</strong> Fecha y hora de 1er evento de Alarma (Fault) o creación manual.<br>
-                    <strong>T.Fin Alarma:</strong> Fecha y hora que Fault desafecto la alarma, muestra los últimos {{ days_configMap }} días.<br>
-                    <strong>Tipo de Alarma:</strong> Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAMADA...).<br>
-                    <strong>T.Inicio Outage:</strong> Fecha y hora que llego la afectacion al Outage Manager.<br>
-                    <strong>Tipo Elemento Red:</strong> Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto de recursos asociados a un nombre, para facilitar su gestión).<br>
-                    <strong>Id Elemento Red:</strong> Nombre del elemento de red donde aplicó el outage.<br>
-                    <strong>#Clientes:</strong> Cantidad de clientes afectados (clientes únicos).<br>
-                    <strong>TER:</strong> Tiempo Estimado de Resolución según tablas históricas.<br>
-                </p>
+
+        <!-- Contenido Expandible -->
+        <div id="expandableDiv" class="expandable-content" style="display: none;">
+
+            <div class="grid-container">
+                <div class="grid-itemRight">Primer Id Outage: </div> 
+                <div class="grid-item"> Id del Outage (o Alarma), obtenido del primero en llegar al Outage Manager (TT o FMx).</div>
+                
+                <div class="grid-itemRight">Otros Id:</div>         
+                <div class="grid-item">Id de la ticketera o de Fault.</div>
+                
+                <div class="grid-itemRight">Estado:</div>           
+                <div class="grid-item">Estado actual del outage.</div>
+                
+                <div class="grid-itemRight">T.Inicio Alarma:</div>  
+                <div class="grid-item">Fecha y hora de 1er evento de Alarma (Fault) o creación manual.</div>
+                
+                <div class="grid-itemRight">T.Fin Alarma:</div>     
+                <div class="grid-item">Fecha y hora que Fault desafectó la alarma, muestra los últimos {{ days_configMap }} días.</div>
+                
+                <div class="grid-itemRight">Tipo de Alarma:</div>
+                <div class="grid-item">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAMADA...).</div>
+                
+                <div class="grid-itemRight">T.Inicio Outage:</div>
+                <div class="grid-item">Fecha y hora que llegó la afectación al Outage Manager.</div>
+                
+                <div class="grid-itemRight">Tipo Elemento Red:</div>
+                <div class="grid-item">Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto de recursos asociados a un nombre, para facilitar su gestión).</div>
+                
+                <div class="grid-itemRight">Id Elemento Red:</div>
+                <div class="grid-item">Nombre del elemento de red donde aplicó el outage.</div>
+                
+                <div class="grid-itemRight">#Clientes:</div>
+                <div class="grid-item">Cantidad de clientes afectados (clientes únicos).</div>
+                
+                <div class="grid-itemRight">TER:</div>
+                <div class="grid-item">Tiempo Estimado de Resolución según tablas históricas.</div>
             </div>
+            
         </div>
-    
 
         
         <div class="page-content" style="position: relative; top: -10px;">
