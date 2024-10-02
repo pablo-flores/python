@@ -168,23 +168,23 @@ $(document).ready(function() {
                         ${alarma.alarmId || ''}
                         <span class="tooltip-text">                           
                             <div class="tooltip-row">
-                                <span class="tooltip-title">Sistema Origen:</span>
-                                <span class="tooltip-value">${alarma.sourceSystemId}</span>
+                                <span class="tooltip-title">Origen:</span>
+                                <span class="tooltip-value">${(alarma.sourceSystemId || '').split('').join(' ')}</span>
                             </div>
                             <div class="tooltip-row">
-                                <span class="tooltip-title">alarmRaisedTime:</span>
+                                <span class="tooltip-title">Deteccion:</span>
                                 <span class="tooltip-value">${alarma.alarmRaisedTime}</span>
                             </div>
                             <div class="tooltip-row">
-                                <span class="tooltip-title">alarmReportingTime:</span>
+                                <span class="tooltip-title">Reporte:</span>
                                 <span class="tooltip-value">${alarma.alarmReportingTime}</span>
                             </div>
                             <div class="tooltip-row">
-                                <span class="tooltip-title">siaArrivalTime:</span>
+                                <span class="tooltip-title">Arribo Outage:</span>
                                 <span class="tooltip-value">${alarma.inicioOUM}</span>
                             </div>
                             <div class="tooltip-row">
-                                <span class="tooltip-title">alarmClearedTime:</span>
+                                <span class="tooltip-title">Resuelto:</span>
                                 <span class="tooltip-value">${alarma.alarmClearedTime}</span>
                             </div>
                         </span>
