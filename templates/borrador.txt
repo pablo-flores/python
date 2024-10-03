@@ -1,0 +1,13 @@
+<td data-tooltip="Este es el contenido del tooltip">{{ alarma.alarmId }}</td>
+<td>{{ alarma.origenId }}</td>                                        
+<td>{{ alarma.alarmState }}</td>                           
+<td>{{ alarma.alarmType }}</td>                            
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmReportingTime }}</td> <!-- Centrar contenido del TD -->   
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->   
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.timeDifference }}</td> <!-- Centrar contenido del TD -->                               
+<td>{{ alarma.TypeNetworkElement }}</td>                
+<td>{{ alarma.networkElementId }}</td>
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.clients }}</td> <!-- Centrar contenido del TD -->                                                                      
+<td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.timeResolution }}</td> <!-- Centrar contenido del TD -->   

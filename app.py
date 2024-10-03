@@ -41,14 +41,30 @@ buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
 # Ruta principal que carga la página
 @app.route('/')
 def index():
-    # Check for 'X-Forwarded-For' header first
+    # Obtener la IP real del cliente usando 'X-Forwarded-For'
     if request.headers.get('X-Forwarded-For'):
-        client_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()  # Take the first IP in the list
+        client_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()
     else:
         client_ip = request.remote_addr
 
+    # Obtener otros encabezados 'X-Forwarded'
+    forwarded_host = request.headers.get('X-Forwarded-Host', 'No disponible')
+    forwarded_proto = request.headers.get('X-Forwarded-Proto', 'No disponible')
+    forwarded_port = request.headers.get('X-Forwarded-Port', 'No disponible')
+    forwarded_server = request.headers.get('X-Forwarded-Server', 'No disponible')
+    real_ip = request.headers.get('X-Real-IP', 'No disponible')
+
     client_user = request.remote_user
-    logger.info(f"Client IP: {client_ip} Client user: {client_user} - Accediendo a viewAlarmsOUM.")
+
+    # Registrar toda la información obtenida
+    logger.info(f"Client IP: {client_ip}")
+    logger.info(f"X-Forwarded-Host: {forwarded_host}")
+    logger.info(f"X-Forwarded-Proto: {forwarded_proto}")
+    logger.info(f"X-Forwarded-Port: {forwarded_port}")
+    logger.info(f"X-Forwarded-Server: {forwarded_server}")
+    logger.info(f"X-Real-IP: {real_ip}")
+    logger.info(f"Client user: {client_user} - Accediendo a viewAlarmsOUM.")
+    
     return render_template('viewAlarmsOUM.html', days_configMap=days_configMap)
 
 

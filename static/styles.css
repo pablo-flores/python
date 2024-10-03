@@ -32,13 +32,30 @@ table {
     /*table-layout: fixed; /* Forces fixed column widths */
 }
 
+table.dataTable tbody th,
+table.dataTable tbody td {
+    /*padding: 2px 2px;*/
+    padding: auto auto;
+    border-collapse: collapse;
+}
+
+table.dataTable {
+    border-collapse: separate;
+    border-spacing: 1;
+}
+
+
 tr {
     pointer-events: auto;
 }
 
 /* Reduce the padding inside each cell */
 #alarmTable th, #alarmTable td {
-    padding: 4px 3px; /* Reduce the padding to make cells more compact */
+    /*padding: 4px 3px; /* Reduce the padding to make cells more compact */
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 4px;
+    padding-right: 1px;
     /*overflow: hidden; /* Hide overflow to prevent text from spilling out */
     text-overflow: ellipsis; /* Adds ellipsis (...) if text is too long */
     white-space: nowrap; /* Prevents text from wrapping to the next line */
@@ -54,7 +71,7 @@ td {
     border: 0.5px solid #000;
     /*padding: 3px 5px; /* Espaciado interior */
     padding: 3px 3px;
-    width: 1%;
+    /*width: 1%;*/
     text-align: left;
     font-family: Arial, sans-serif;
     /*font-size: 14px; /* Ajusta el tamaño de la letra aquí */
@@ -76,6 +93,15 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+/* Estilo para ajustar la columna "Alarm Cleared Time" */
+td.centered-columnLL {
+    padding: 2px 2px;    /* Reduce el espacio dentro de la celda */
+    white-space: nowrap;    /* Evita que el texto se divida en varias líneas */
+    width: 1%;    /* Hace que la columna se ajuste al contenido */
+    text-align: center;    /* Centra el contenido */
+}
+
 
 .footer {
     text-align: right;
@@ -221,6 +247,7 @@ body, html {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);    /* Sombra suave para darle profundidad */
 }
 
+
 .dataTables_filter input:focus {
     border-color: #0056b3;    /* Cambia el color del borde al hacer foco */
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);    /* Aumenta la sombra al hacer foco */
@@ -231,13 +258,6 @@ body, html {
     margin-bottom: 2px;    /* Espacio debajo */
 }
 
-/* Estilo para ajustar la columna "Alarm Cleared Time" */
-td.centered-column {
-    padding: 2px 2px;    /* Reduce el espacio dentro de la celda */
-    white-space: nowrap;    /* Evita que el texto se divida en varias líneas */
-    width: 1%;    /* Hace que la columna se ajuste al contenido */
-    text-align: center;    /* Centra el contenido */
-}
 
 /****************************************************************************************************/
 
@@ -302,16 +322,6 @@ input[type="checkbox"]:checked+#expandableDiv {
     cursor: pointer; /* Indica que la fila es interactiva */
 }
 
-table.dataTable tbody th,
-table.dataTable tbody td {
-    padding: 2px 2px;
-    border-collapse: collapse;
-}
-
-table.dataTable {
-    border-collapse: separate;
-    border-spacing: 1;
-}
 
 
 /**************************************************/
