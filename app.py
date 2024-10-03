@@ -41,15 +41,29 @@ buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
 # Ruta principal que carga la página
 @app.route('/')
 def index():
-    client_ip = request.remote_addr
-    logger.info(f"Client IP: {client_ip} - Accessing viewAlarmsOUM.")
+    # Check for 'X-Forwarded-For' header first
+    if request.headers.get('X-Forwarded-For'):
+        client_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()  # Take the first IP in the list
+    else:
+        client_ip = request.remote_addr
+
+    client_user = request.remote_user
+    logger.info(f"Client IP: {client_ip} Client user: {client_user} - Accediendo a viewAlarmsOUM.")
     return render_template('viewAlarmsOUM.html', days_configMap=days_configMap)
+
 
 # Nueva ruta para obtener las alarmas en formato JSON
 @app.route('/get_alarmas', methods=['GET'])
 def get_alarmas():
-    client_ip = request.remote_addr
-    logger.info(f"Client IP: {client_ip} - Accessing /get_alarmas.")
+    # Check for 'X-Forwarded-For' header first
+    if request.headers.get('X-Forwarded-For'):
+        client_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()  # Take the first IP in the list
+    else:
+        client_ip = request.remote_addr
+
+    client_user = request.remote_user
+    logger.info(f"Client IP: {client_ip} Client user: {client_user} - Accediendo a /get_alarmas.")
+         
 
     days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
     logger.info(f"Consultando alarmas desde {days_ago}.")
@@ -159,7 +173,7 @@ def get_alarmas():
             inicio_outage = datetime.strptime(alarma['inicioOUM'], '%m-%d %H:%M:%S')
             inicio_alarma = datetime.strptime(alarma['alarmRaisedTime'], '%m-%d %H:%M:%S')
             time_difference = (inicio_outage - inicio_alarma).total_seconds() / 60  # Difference in minutes
-            alarma['timeDifference'] = round(time_difference, 0)  # Round to 0 decimal places
+            alarma['timeDifference'] = str(int(time_difference)) + 'min' # Round to 0 decimal places
         else:
             alarma['timeDifference'] = '-'
 

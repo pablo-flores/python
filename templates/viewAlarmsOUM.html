@@ -49,7 +49,7 @@
         <div id="expandableDiv" class="expandable-content" style="display: none;">
 
             <div class="grid-container">
-                <div class="grid-itemRight">Primer Id Outage: </div> 
+                <div class="grid-itemRight">Primer Id Outage:</div> 
                 <div class="grid-item"> Id del Outage (o Alarma), obtenido del primero en llegar al Outage Manager (TT o FMx).</div>
                 
                 <div class="grid-itemRight">Otros Id:</div>         
@@ -58,19 +58,22 @@
                 <div class="grid-itemRight">Estado:</div>           
                 <div class="grid-item">Estado actual del outage.</div>
                 
+                <div class="grid-itemRight">Tipo de Alarma:</div>
+                <div class="grid-item">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAMADA...).</div>                
+
                 <div class="grid-itemRight">T.Inicio Alarma:</div>  
                 <div class="grid-item">Fecha y hora de 1er evento de Alarma (Fault) o creación manual.</div>
                 
                 <div class="grid-itemRight">T.Fin Alarma:</div>     
                 <div class="grid-item">Fecha y hora que Fault desafectó la alarma, muestra los últimos {{ days_configMap }} días.</div>
                 
-                <div class="grid-itemRight">Tipo de Alarma:</div>
-                <div class="grid-item">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION y TAREA_PROGRAMADA...).</div>
+                <div class="grid-itemRight">T.Creacion TT:</div>
+                <div class="grid-item">Fecha y hora que se reporto para el Trouble Ticket.</div>
                 
                 <div class="grid-itemRight">T.Inicio Outage:</div>
                 <div class="grid-item">Fecha y hora que llegó la afectación al Outage Manager.</div>
 
-                <div class="grid-itemRight">Dif.Min.:</div>
+                <div class="grid-itemRight">Dif.Inicio Alarma vs Inicio Outage:</div>
                 <div class="grid-item">Diferencia minutos entre T.Inicio Outage y T.Inicio Alarma.</div>                
                 
                 <div class="grid-itemRight">Tipo Elemento Red:</div>
@@ -98,18 +101,19 @@
             <table id="alarmTable" style="display:none; margin: 0 3px; width: calc(100% - 6px);">
                 <thead>
                     <tr>
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Primer Id Outage<span class="tooltip-text">Id del Outage (o Alarma), obtenido del primero en llegar al O. Manager (TT o FMx).</span></th>
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Otros Id<span class="tooltip-text">Id de la ticketera o de Fault.</span></th>                    
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Estado<span class="tooltip-text">Estado actual del outage.</span></th>                                                            
-                        <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Tipo de Alarma<span class="tooltip-text">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA...).</span></th>                                            
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">T.Inicio Alarma<span class="tooltip-text">Fecha y hora de 1er evento de Alarma (Fault) o creación manual.</span></th>                                        
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">T.Fin Alarma<span class="tooltip-text">Fecha y hora que Fault desafecto la alarma, muestra los últimos 4 días.</span></th>                                                                                
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">T.Inicio Outage<span class="tooltip-text">Fecha y hora que llego la afectacion al Outage Manager.</span></th>                                        
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">Dif.Min.<span class="tooltip-text">Diferencia minutos entre T.Inicio Outage y T.Inicio Alarma.</span></th>                                                                
-                        <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Tipo Elemento Red<span class="tooltip-text">Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto recursos asociados a un nombre, para facilitar su gestión).</span></th>                    
-                        <th style="font-size: 0.8vw; white-space: normal; word-break: normal;">Id Elemento Red<span class="tooltip-text">Nombre elemento de red donde aplico el outage.</span></th>                                        
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">#Clientes<span class="tooltip-text">Cantidad de clientes afectados (clientes únicos).</span></th>                    
-                        <th style="font-size: 0.8vw; white-space: nowrap; word-break: normal;">TER<span class="tooltip-text">Según tablas históricas.</span></th>                    
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">Primer Id Outage<span class="tooltip-text">Id del Outage (o Alarma), obtenido del primero en llegar al O. Manager (TT o FMx).</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">Otros Id<span class="tooltip-text">Id de la ticketera o de Fault.</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">Estado<span class="tooltip-text">Estado actual del outage.</span></th>
+                        <th style="font-size: 0.7vw; white-space: normal; word-break: normal;">Tipo de Alarma<span class="tooltip-text">Tipo de alarma (INDISPONIBILIDAD, DEGRADACION, TAREA_PROGRAMADA...).</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">T.Inicio Alarma<span class="tooltip-text">Fecha y hora de 1er evento de Alarma (Fault) o creación manual.</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">T.Fin Alarma<span class="tooltip-text">Fecha y hora que Fault desafecto la alarma, muestra los últimos 4 días.</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">T.Creacion TT<span class="tooltip-text">Fecha y hora que Fault desafecto la alarma, muestra los últimos 4 días.</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">T.Inicio Outage<span class="tooltip-text">Fecha y hora que llego la afectacion al Outage Manager.</span></th>
+                        <th style="font-size: 0.7vw; white-space: wrap;   word-break: normal;">Dif.Inicio Alarma vs Inicio Outage<span class="tooltip-text">Diferencia minutos entre T.Inicio Outage y T.Inicio Alarma.</span></th>
+                        <th style="font-size: 0.7vw; white-space: normal; word-break: normal;">Tipo Elemento Red<span class="tooltip-text">Tipo de elemento de red asociado (RFS: Resource Facing Service, conjunto recursos asociados a un nombre, para facilitar su gestión).</span></th>
+                        <th style="font-size: 0.7vw; white-space: wrap;   word-break: normal;">Id Elemento Red<span class="tooltip-text">Nombre elemento de red donde aplico el outage.</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">#Cli<span class="tooltip-text">Cantidad de clientes afectados (clientes únicos).</span></th>
+                        <th style="font-size: 0.7vw; white-space: nowrap; word-break: normal;">TER<span class="tooltip-text">Según tablas históricas.</span></th>
                     </tr>       
                 </thead>
                         
@@ -123,6 +127,7 @@
                             <td>{{ alarma.alarmType }}</td>                            
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmRaisedTime }}</td> <!-- Centrar contenido del TD -->                             
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmClearedTime }}</td> <!-- Centrar contenido del TD -->                             
+                            <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.alarmReportingTime }}</td> <!-- Centrar contenido del TD -->   
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.inicioOUM }}</td> <!-- Centrar contenido del TD -->   
                             <td style="text-align: center; padding: 2px 2px; width: 1%; ">{{ alarma.timeDifference }}</td> <!-- Centrar contenido del TD -->                               
                             <td>{{ alarma.TypeNetworkElement }}</td>                

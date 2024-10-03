@@ -195,6 +195,7 @@ $(document).ready(function() {
                     <td>${alarma.alarmType}</td>                    
                     <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmRaisedTime }</td> <!-- Centrar contenido del TD -->                            
                     <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmClearedTime }</td> <!-- Centrar contenido del TD -->
+                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmReportingTime}</td> <!-- Centrar contenido del TD -->                    
                     <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->
                     <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.timeDifference }</td> <!-- New column for the time difference -->
                     <td>${alarma.TypeNetworkElement}</td>
@@ -220,15 +221,15 @@ $(document).ready(function() {
                 "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
                 "columnDefs": [                                                                                      
                     {
-                        "targets": 7, // Índice de la columna 'diff'
-                        "type": "num" // Definir la columna como numérica
+                        "targets": 8, // Índice de la columna 'diff'
+                        "type": "string" // Definir la columna como numérica
                     },
                     {
-                        "targets": 10, // Índice de la columna 'Clients'
+                        "targets": 11, // Índice de la columna 'Clients'
                         "type": "num" // Definir la columna como numérica
                     },
                     { 
-                        "targets": 11, // Índice de la columna 'Time Resolution'
+                        "targets": 12, // Índice de la columna 'Time Resolution'
                         "type": "string" // Definir la columna como string
                     }
                 ],

@@ -38,7 +38,7 @@ tr {
 
 /* Reduce the padding inside each cell */
 #alarmTable th, #alarmTable td {
-    padding: 7px; /* Adjust padding to reduce the row height */
+    padding: 4px 3px; /* Reduce the padding to make cells more compact */
     /*overflow: hidden; /* Hide overflow to prevent text from spilling out */
     text-overflow: ellipsis; /* Adds ellipsis (...) if text is too long */
     white-space: nowrap; /* Prevents text from wrapping to the next line */
@@ -52,7 +52,9 @@ tr {
 th,
 td {
     border: 0.5px solid #000;
-    padding: 0px; /* Espaciado interior */
+    /*padding: 3px 5px; /* Espaciado interior */
+    padding: 3px 3px;
+    width: 1%;
     text-align: left;
     font-family: Arial, sans-serif;
     /*font-size: 14px; /* Ajusta el tamaño de la letra aquí */
@@ -304,6 +306,11 @@ table.dataTable tbody th,
 table.dataTable tbody td {
     padding: 2px 2px;
     border-collapse: collapse;
+}
+
+table.dataTable {
+    border-collapse: separate;
+    border-spacing: 1;
 }
 
 
@@ -565,7 +572,7 @@ table.dataTable tbody td {
 /* Estilos para el contenedor de la barra de progreso */
 #progress-container {
     width: 90%; /* Ancho de la barra */
-    height: 3px; /* Alto de la barra */
+    height: 2px; /* Alto de la barra */
     background-color: #5290d3; /* Mismo color que la barra del fondo */
     /*border-radius: 5px; /* Bordes redondeados */
     overflow: hidden;
@@ -573,7 +580,7 @@ table.dataTable tbody td {
     margin-right: 5%; /* Margen derecho para alejar del borde */
     direction: rtl; /* Invertir la dirección del llenado */
     margin-top: 3px; /* Añade un margen superior del botón de Refresh */
-    border: 1px solid #681fff;
+    border: 1px solid #ff912a;   /* recuadro de progress*/
 }
 
 /* Estilo del botón cuando se activa el progress */
@@ -672,3 +679,4 @@ table.dataTable tbody td {
   }
 
 /***********************************************************/
+
