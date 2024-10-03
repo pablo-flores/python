@@ -55,7 +55,7 @@ tr {
     padding-top: 7px;
     padding-bottom: 7px;
     padding-left: 4px;
-    padding-right: 1px;
+    padding-right: 3px;
     /*overflow: hidden; /* Hide overflow to prevent text from spilling out */
     text-overflow: ellipsis; /* Adds ellipsis (...) if text is too long */
     white-space: nowrap; /* Prevents text from wrapping to the next line */
@@ -590,7 +590,7 @@ input[type="checkbox"]:checked+#expandableDiv {
     margin-right: 5%; /* Margen derecho para alejar del borde */
     direction: rtl; /* Invertir la dirección del llenado */
     margin-top: 3px; /* Añade un margen superior del botón de Refresh */
-    border: 1px solid #ff912a;   /* recuadro de progress*/
+    border: 1px solid #fcf298;   /* recuadro de progress*/
 }
 
 /* Estilo del botón cuando se activa el progress */

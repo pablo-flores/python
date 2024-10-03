@@ -164,12 +164,12 @@ $(document).ready(function() {
 
                 tableBody += `
                 <tr>
-                    <td class="tooltip-cell">
-                        ${alarma.alarmId || ''}
+                    <td class="tooltip-cell" style="text-align: left;">
+                        ${alarma.alarmId}
                         <span class="tooltip-text">                           
                             <div class="tooltip-row">
                                 <span class="tooltip-title">Origen:</span>
-                                <span class="tooltip-value">${(alarma.sourceSystemId || '').split('').join(' ')}</span>
+                                <span class="tooltip-value">${(alarma.sourceSystemId).split('').join(' ')}</span>
                             </div>
                             <div class="tooltip-row">
                                 <span class="tooltip-title">Deteccion:</span>
@@ -189,19 +189,19 @@ $(document).ready(function() {
                             </div>
                         </span>
                     </td>
-
-                    <td>${alarma.origenId }</td>
-                    <td>${alarmState }</td> <!-- Use modified alarmState here -->                   
-                    <td>${alarma.alarmType}</td>                    
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmRaisedTime }</td> <!-- Centrar contenido del TD -->                            
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmClearedTime }</td> <!-- Centrar contenido del TD -->
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.alarmReportingTime}</td> <!-- Centrar contenido del TD -->                    
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->
-                    <td style="text-align: center;padding: 2px 2px;width: 1%;">${alarma.timeDifference }</td> <!-- New column for the time difference -->
-                    <td>${alarma.TypeNetworkElement}</td>
-                    <td>${alarma.networkElementId}</td>
-                    <td style="text-align: right;padding: 2px 4px;width: 1%;">${alarma.clients}</td> <!-- Centrar contenido del TD -->
-                    <td style="text-align: right;padding: 2px 8px;width: 1%;">${alarma.timeResolution}</td> <!-- Centrar contenido del TD -->
+                
+                    <td style="text-align: left  ;">${alarma.origenId }</td>
+                    <td style="text-align: left  ;">${alarmState }</td> <!-- Use modified alarmState here -->                   
+                    <td style="text-align: left  ;">${alarma.alarmType}</td>                    
+                    <td style="text-align: center;">${alarma.alarmRaisedTime }</td> <!-- Centrar contenido del TD -->                            
+                    <td style="text-align: center;">${alarma.alarmClearedTime }</td> <!-- Centrar contenido del TD -->
+                    <td style="text-align: center;">${alarma.alarmReportingTime}</td> <!-- Centrar contenido del TD -->                    
+                    <td style="text-align: center;">${alarma.inicioOUM}</td> <!-- Centrar contenido del TD -->
+                    <td style="text-align: right ;">${alarma.timeDifference }</td> <!-- New column for the time difference -->
+                    <td style="text-align: left  ;">${alarma.TypeNetworkElement}</td>
+                    <td style="text-align: left  ;">${alarma.networkElementId}</td>
+                    <td style="text-align: right ;">${alarma.clients}</td> <!-- Centrar contenido del TD -->
+                    <td style="text-align: right ;">${alarma.timeResolution}</td> <!-- Centrar contenido del TD -->
                 </tr>`;
             });
             $('#alarmTable tbody').html(tableBody);
