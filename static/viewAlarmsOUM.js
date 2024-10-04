@@ -221,16 +221,32 @@ $(document).ready(function() {
                 "lengthMenu": [ [10, 15, 25, 50, 100, 300, -1], [10, 15, 25, 50, 100, 300, "Todos"] ],
                 "columnDefs": [                                                                                      
                     {
-                        "targets": 8, // Índice de la columna 'diff'
-                        "type": "string" // Definir la columna como numérica
+                        "targets": 8, // Index of the 'timeDifference' column
+                        "type": "num",
+                        "render": function(data, type, row) {
+                            if (type === 'sort' || type === 'type') {
+                                // Extract numeric part for sorting
+                                return parseFloat(data) || 0;
+                            }
+                            // Return original data for display
+                            return data;
+                        }
                     },
                     {
                         "targets": 11, // Índice de la columna 'Clients'
                         "type": "num" // Definir la columna como numérica
                     },
-                    { 
-                        "targets": 12, // Índice de la columna 'Time Resolution'
-                        "type": "string" // Definir la columna como string
+                    {
+                        "targets": 12, // Index of the 'TER' column
+                        "type": "num",
+                        "render": function(data, type, row) {
+                            if (type === 'sort' || type === 'type') {
+                                // Extract numeric part for sorting
+                                return parseFloat(data) || 0;
+                            }
+                            // Return original data for display
+                            return data;
+                        }
                     }
                 ],
 
