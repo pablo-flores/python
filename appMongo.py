@@ -1,5 +1,6 @@
 import logging
 from flask import Flask, render_template, Response, jsonify, request
+from pymongo import ASCENDING, DESCENDING
 from datetime import datetime, timedelta
 from flask_pymongo import PyMongo
 from pytz import timezone, utc
@@ -42,28 +43,28 @@ buenos_aires_tz = timezone('America/Argentina/Buenos_Aires')
 @app.route('/')
 def index():
     # Obtener la IP real del cliente usando 'X-Forwarded-For'
-    if request.headers.get('X-Forwarded-For'):
-        client_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()
-    else:
-        client_ip = request.remote_addr
-
-    # Obtener otros encabezados 'X-Forwarded'
-    forwarded_host = request.headers.get('X-Forwarded-Host', 'No disponible')
-    forwarded_proto = request.headers.get('X-Forwarded-Proto', 'No disponible')
-    forwarded_port = request.headers.get('X-Forwarded-Port', 'No disponible')
-    forwarded_server = request.headers.get('X-Forwarded-Server', 'No disponible')
-    real_ip = request.headers.get('X-Real-IP', 'No disponible')
-
-    client_user = request.remote_user
-
-    # Registrar toda la información obtenida
-    logger.debug(f"Client IP: {client_ip}")
-    logger.debug(f"X-Forwarded-Host: {forwarded_host}")
-    logger.debug(f"X-Forwarded-Proto: {forwarded_proto}")
-    logger.debug(f"X-Forwarded-Port: {forwarded_port}")
-    logger.debug(f"X-Forwarded-Server: {forwarded_server}")
-    logger.debug(f"X-Real-IP: {real_ip}")
-    logger.debug(f"Client user: {client_user} - Accediendo a viewAlarmsOUM.")
+#    if request.headers.get('X-Forwarded-For'):
+#        client_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()
+#    else:
+#        client_ip = request.remote_addr
+#
+#    # Obtener otros encabezados 'X-Forwarded'
+#    forwarded_host = request.headers.get('X-Forwarded-Host', 'No disponible')
+#    forwarded_proto = request.headers.get('X-Forwarded-Proto', 'No disponible')
+#    forwarded_port = request.headers.get('X-Forwarded-Port', 'No disponible')
+#    forwarded_server = request.headers.get('X-Forwarded-Server', 'No disponible')
+#    real_ip = request.headers.get('X-Real-IP', 'No disponible')
+#
+#    client_user = request.remote_user
+#
+#    # Registrar toda la información obtenida
+#    logger.info(f"Client IP: {client_ip}")
+#    logger.info(f"X-Forwarded-Host: {forwarded_host}")
+#    logger.info(f"X-Forwarded-Proto: {forwarded_proto}")
+#    logger.info(f"X-Forwarded-Port: {forwarded_port}")
+#    logger.info(f"X-Forwarded-Server: {forwarded_server}")
+#    logger.info(f"X-Real-IP: {real_ip}")
+#    logger.info(f"Client user: {client_user} - Accediendo a viewAlarmsOUM.")
     
     return render_template('viewAlarmsOUM.html', days_configMap=days_configMap)
 
@@ -84,18 +85,77 @@ def get_alarmas():
     days_ago = datetime.now(buenos_aires_tz) - timedelta(days=days_configMap)  # default 4
     logger.info(f"Consultando alarmas desde {days_ago}.")
 
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 15))
+    skip = (page - 1) * limit
+    search_value = request.args.get('search[value]', '')
+
+    # Get sorting information
+    order_column_index = request.args.get('order[0][column]', '0')  # Default to column index 0
+    order_direction = request.args.get('order[0][dir]', 'asc')  # Default to ascending
+    
+    # Map column indices to database fields
+    column_mapping = {
+        '0': 'alarmId',
+        '1': 'origenId',
+        '2': 'alarmState',
+        '3': 'alarmType',
+        '4': 'alarmRaisedTime',
+        '5': 'alarmClearedTime',
+        '6': 'alarmReportingTime',
+        '7': 'inicioOUM',
+        '8': 'timeDifference',
+        '9': 'TypeNetworkElement',
+        '10': 'networkElementId',
+        '11': 'clients',
+        '12': 'timeResolution'
+    }
+
+    # Determine the field to sort by and the direction
+    if order_column_index is None:  # No sorting column specified, use default sorting
+        sort_field = '_id'
+        sort_direction = DESCENDING
+    else:
+        sort_field = column_mapping.get(order_column_index, 'inicioOUM')  # Default to 'alarmId'
+        sort_direction = ASCENDING if order_direction == 'asc' else DESCENDING
+    
+    # Debugging: Print the sorting information
+    print(f"Sorting by: {sort_field}, Direction: {order_direction}")
+
+    # Construct the search filter if a search value is provided
+    search_filter = {
+        "$or": [
+            {"alarmId": {"$regex": search_value, "$options": "i"}},
+            {"alarmType": {"$regex": search_value, "$options": "i"}},
+            {"alarmState": {"$regex": search_value, "$options": "i"}},
+            {"clients": {"$regex": search_value, "$options": "i"}},
+            {"networkElementId": {"$regex": search_value, "$options": "i"}},
+            {"origenId": {"$regex": search_value, "$options": "i"}},
+            {"sourceSystemId": {"$regex": search_value, "$options": "i"}},
+            {"inicioOUM": {"$regex": search_value, "$options": "i"}},
+            {"alarmRaisedTime": {"$regex": search_value, "$options": "i"}},
+            {"alarmClearedTime": {"$regex": search_value, "$options": "i"}},
+            {"alarmReportingTime": {"$regex": search_value, "$options": "i"}},
+            {"TypeNetworkElement": {"$regex": search_value, "$options": "i"}},
+            {"timeResolution": {"$regex": search_value, "$options": "i"}},
+            {"timeDifference": {"$regex": search_value, "$options": "i"}}
+        ]
+    }
+
+    # Combine search filter with the existing query
+    query_filter = {
+        "$or": [
+            {"alarmState": {"$in": ['RAISED', 'UPDATED', 'RETRY']}},
+            {"alarmState": "CLEARED", "alarmClearedTime": {"$gte": days_ago}}
+        ]
+    }
+    if search_filter:
+        query_filter = {"$and": [query_filter, search_filter]}
+
+
+    # Perform the database query with pagination
     cursor = mongo.db.alarm.find(
-        {
-            "$or": [
-                { 
-                    "alarmState": { "$in": ['RAISED', 'UPDATED', 'RETRY'] }                   
-                },
-                {
-                    "alarmState": "CLEARED",
-                    "alarmClearedTime": { "$gte": days_ago }
-                }
-            ]
-        },
+        query_filter,
         {
             "_id": 0,
             "alarmId": 1,
@@ -110,9 +170,9 @@ def get_alarmas():
             "inicioOUM": "$omArrivalTimestamp",
             "alarmRaisedTime": 1,
             "alarmClearedTime": 1,
-            "alarmReportingTime":1
+            "alarmReportingTime": 1
         }
-    ).sort("_id", -1)
+    ).sort(sort_field, sort_direction).skip(skip).limit(limit)
 
     alarmas = []
     for alarma in cursor:
@@ -139,24 +199,13 @@ def get_alarmas():
         if not alarma.get('timeResolution'):
             alarma['timeResolution'] = '-'     
 
-#        if alarma.get('alarmState') in ["UPDATED", "RETRY"]:
-#            logger.info('es   '+alarma.get('alarmState'))
-#            alarma['alarmState'] = "RAISED"
-#            logger.info('hacer '+alarma.get('alarmState'))
-#        else:
-#            #alarma['alarmState'] = alarma.get('alarmState')
-#            logger.info('todo '+ alarma.get('alarmState'))
-
-
-#        alarm_id = alarma.get('alarmId') or ''
-#        origen_id = alarma.get('origenId') or ''
-#
-#        # Check if alarm_id is a substring of origen_id or vice versa
-#        if alarm_id in origen_id or origen_id in alarm_id:
-#            alarma['origenId'] = (alarma.get('sourceSystemId') or '') + ' ' + origen_id
-#        else:
-#            alarma['origenId'] = 'ICD ' + origen_id
-
+#        # Apply conversion to alarmState
+#        alarmState = alarma.get('alarmState', '').strip()
+#        if alarmState in ['UPDATED', 'RETRY']:
+#            alarma['alarmState'] = 'RAISED'
+        
+#        if alarma['alarmClearedTime'] != '-':
+#            alarma['alarmState'] = 'CLEARED'
 
         # infiere el origen por la numeracion
 
@@ -171,6 +220,7 @@ def get_alarmas():
             alarma['origenId'] = 'FMC ' + origen_id
         else:
             alarma['origenId'] = 'ICD ' + origen_id
+
 
             
         if len(alarm_id) == 24:
@@ -192,11 +242,19 @@ def get_alarmas():
         else:
             alarma['timeDifference'] = '-'
 
-
         alarmas.append(alarma)
 
+
+    # Count total documents for pagination
+    total_count = mongo.db.alarm.count_documents(query_filter)
+
     logger.info(f"Se encontraron {len(alarmas)} alarmas.")
-    return jsonify({"alarmas": alarmas})
+    return jsonify({
+        "draw": int(request.args.get('draw', 1)),
+        "recordsTotal": total_count,
+        "recordsFiltered": total_count,
+        "data": alarmas
+    })
 
 # Ruta para exportar los datos
 @app.route('/export/<format>')

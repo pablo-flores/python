@@ -21,11 +21,11 @@ Asegúrate de tener **Python 3.x** instalado en tu sistema.
 
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/outage-manager.git
+   git clone https://github.com/pablo-flores/sia-alarmas-ui.git
    ```
 2. Navega al directorio del proyecto:
    ```bash
-   cd outage-manager
+   cd sia-alarmas-ui
    ```
 3. Instala las dependencias necesarias utilizando el archivo `requirements.txt`:
    ```bash
